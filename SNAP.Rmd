@@ -3,10 +3,10 @@ title: "SNAP"
 author: "Yangyang Dai"
 fontsize: 11pt
 output:
-  html_document:
-    df_print: paged
   pdf_document:
     df_print: kable
+  html_document:
+    df_print: paged
 geometry: margin=0.75in
 fig_crop: no
 ---
@@ -43,7 +43,7 @@ opts_chunk$set(size='small')
 part_18 <-read.xlsx("snap_part_2018.xls",header=F,skip=6,sheetIndex = 1)
 part_18<-part_18[-c(9,48,49),][7:58,]
 colnames(part_18) <- c("state","sep17","aug18","sep18","sep18_vs_aug18","sep18_vs_sep17")
-head(part_18)
+# head(part_18)
 ```
 
 
@@ -100,12 +100,12 @@ Participation population of SNAP program in US across the 51 states, four region
 
 ```{r echo=FALSE}
 part_ben<-read.xlsx("part_ben_89to18.xlsx",header=TRUE,sheetIndex = 1)
-head(part_ben)
+# head(part_ben)
 ```
 ```{r echo=FALSE}
 snap<-read.xlsx("DataDownload.xls",head=T,sheetIndex = 10)
 df<-snap
-head(df)
+# head(df)
 ```
 ```{r echo=FALSE}
 library(ggplot2)
@@ -150,17 +150,17 @@ states %>%
 ```
 ```{r echo=FALSE}
 pop <- read.delim("data.txt",header = TRUE, sep = ",")
-pop
+# pop
 
 pop$part.18<-part_18$sep18
 pop$part.per.capita<-as.numeric(pop$part.18)/as.numeric(pop$X2019.Population)
-pop
+# pop
 
-states
+# states
 colnames(pop)[colnames(pop)=="State"] <- "state_name"
 
 # state.abb[match(states$state_name,state.name)]
-pop
+# pop
 
 pop %>%
   left_join(states, by = "state_name") %>% 
@@ -201,7 +201,7 @@ library(scales)
 library(lubridate)
 
 snap_event<-read.xlsx("snap_event.xlsx",head=T,sheetIndex = 1)
-head(snap_event)
+# head(snap_event)
 
 snap_event$y<-c(runif(8,.3,.5),runif(7,-.5,-.3))
 
@@ -221,7 +221,7 @@ text_offset <- 0.05
 
 # df$month_count <- ave(df$date==df$date, df$date, FUN=cumsum)
 snap_event$text_position <- (text_offset * snap_event$direction) + snap_event$position
-head(snap_event)
+# head(snap_event)
 
 
 ggplot(snap_event,aes(x=year,y=0,  label=event))+labs(col="events")+theme_classic()+geom_hline(yintercept=0, 
