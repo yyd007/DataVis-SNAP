@@ -3,8 +3,8 @@ title: "proj2.1"
 author: "Yangyang Dai"
 date: "2/1/2019"
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -71,7 +71,7 @@ for (row in 1:nrow(part_18)) {
 
 
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.align = "center",out.width = '80%'}
 part_18 <- part_18[!grepl("Guam", part_18$state),]
 
 ggplot(data=part_18,aes(x=reorder(state,as.numeric(as.character(sep18))),as.numeric(as.character(sep18))),fill="steel blue") + scale_y_continuous(label=c("0","1m","2m","3m","4m"))+geom_col() + coord_flip() +  facet_grid(region~.,scales="free_y") +
@@ -86,10 +86,9 @@ Participation population of SNAP program in US across the 51 states, four region
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
 part_ben<-read.xlsx("part_ben_89to18.xlsx",header=TRUE,sheetIndex = 1)
 ```
-```{r echo=FALSE}
+```{r echo=FALSE, message=FALSE, warning=FALSE}
 snap<-read.xlsx("DataDownload.xls",head=T,sheetIndex = 10)
 df<-snap
-
 ```
 
 
@@ -105,17 +104,29 @@ df<-snap
 ```
 
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.align = "center",out.width = '80%'}
 pop <- read.delim("data.txt",header = TRUE, sep = ",")
-pop$part.18<-part_18$sep18
-pop$part.per.capita<-as.numeric(pop$part.18)/as.numeric(pop$X2019.Population)
+# part_18:
+# Guam
+# Virgin Islands
+
+# pop:
+# Rhode Island
+
+# pop$part.18
+# pop$X2019.Population
+# pop$part.per.capita
 
 colnames(pop)[colnames(pop)=="State"] <- "state_name"
+# part_18<-part_18[ ! part_18$state %in% c("Guam","Virgin Islands"), ]
+# pop<-pop[ ! pop$state %in% c("Rhode Island"), ]
+# pop$part.18<-part_18$sep18
+# pop$part.per.capita<-as.numeric(pop$part.18)/as.numeric(pop$X2019.Population)
 
 pop %>%
   left_join(states, by = "state_name") %>% 
-  ggplot(mapping = aes(long, lat, group = group, fill = part.per.capita)) +labs(title="US SNAP Participation per capita by State", subtitle="State SNAP participation rate has small range", caption="Source:USDA Food Nutrition Services
-")+theme(panel.grid.major = element_line(colour = 'transparent'),
+  ggplot(mapping = aes(long, lat, group = group, fill = X..of.US)) +labs(title="US SNAP Participation per capita by State", subtitle="State SNAP participation rate has small range", caption="Source:USDA Food Nutrition Services
+")+theme(legend.text = element_text(size = 8),panel.grid.major = element_line(colour = 'transparent'),
  axis.title.x=element_blank(), 
  axis.text.x=element_blank(),
  axis.ticks.x=element_blank(),
@@ -140,7 +151,7 @@ dt<-dt[J(unique(State)), mult = "first"]
 colnames(dt)[colnames(dt)=="State"] <- "state_abbv"
 state.abb[match(states$state_name,state.name)]
 ```
-```{r echo=FALSE, message=FALSE, warning=FALSE}
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.align = "center",out.width = '80%'}
 dt %>%
   left_join(states, by = "state_abbv") %>% 
   ggplot(mapping = aes(long, lat, group = group, fill = FOOD_TAX14))  +labs(title="US Food Tax", subtitle="", caption="Source:USDA Food Nutrition Services
@@ -162,7 +173,7 @@ dt %>%
 
 Drawing a US Food Tax map across states and comparing it with the previous participation rate map, we can see that places with higher SNAP participation rates do not have high food tax. And places with high food tax rates tend to have low SNAP participation rates. 
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.align = "center",out.width = '100%'}
 
 snap_event<-read.xlsx("snap_event.xlsx",head=T,sheetIndex = 1)
 
@@ -193,11 +204,11 @@ ggplot(snap_event,aes(x=year,y=0,  label=event))+labs(col="events")+theme_classi
                  axis.ticks.x =element_blank(),
                  axis.line.x =element_blank(),
                  legend.position = "bottom"
-                ) + geom_text(data=snap_event, aes(x=year,y=-0.2,label=year,vjust=-7, fontface="bold"),size=2.5, color='turquoise4')+geom_point(aes(y=0), size=3,color='turquoise4')+geom_text(aes(y=text_position,label=event),size=3.5,fontface="bold")+labs(title="SNAP 1964 - Today", subtitle="Big Events in SNAP History", caption="Source:USDA Food Nutrition Services \n https://www.fns.usda.gov/snap/short-history-snap")
+                ) + geom_text(data=snap_event, aes(x=year,y=-0.2,label=year,vjust=-5, fontface="bold"),size=1.5, color='turquoise4')+geom_point(aes(y=0), size=3,color='turquoise4')+geom_text(aes(y=text_position,label=event),size=2,fontface="bold")+labs(title="SNAP 1964 - Today", subtitle="Big Events in SNAP History", caption="Source:USDA Food Nutrition Services \n https://www.fns.usda.gov/snap/short-history-snap")
 
 ```
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.align = "center",out.width = '80%'}
 part_ben$Year <- as.Date(as.character(part_ben$Year), format = "%Y")
 snap_event$year <- as.Date(as.character(snap_event$year), format = "%Y")
 
@@ -214,7 +225,7 @@ p2
 From 1989 to 2018, the SNAP participation number in US increased from below two millions to about four millions, almost doubled in two decades. The peaks within the two decades happened at year 1994 and year 2013, reached over 2.5 millions and over 4.5 millions respectively. Connecting to the previous SNAP timeline graph, SNAP reached participation milestone for those two years.  The Food Stamp Nutrition Education program at 1992 and Mickey Leland Childhood Hunger Relief Act at 1993 influenced the growth of SNAP, the participants increased dramatically afterwards. And from 2002 to 2014, there are five events happened that drove the SNAP participaion greatly. 
 
 
-```{r echo=FALSE, message=FALSE, warning=FALSE}
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.align = "center",out.width = '80%'}
 um<-read.xlsx("um_79to18.xlsx",header=TRUE,sheetIndex = 1)[11:40,]
 # um
 # head(part_ben)

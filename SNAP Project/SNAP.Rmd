@@ -236,7 +236,7 @@ ggplot(snap_event,aes(x=year,y=0,  label=event))+labs(col="events")+theme_classi
                  axis.ticks.x =element_blank(),
                  axis.line.x =element_blank(),
                  legend.position = "bottom"
-                ) + geom_text(data=snap_event, aes(x=year,y=-0.2,label=year,vjust=-7, fontface="bold"),size=2.5, color='turquoise4')+geom_point(aes(y=0), size=3,color='turquoise4')+geom_text(aes(y=text_position,label=event),size=3.5,fontface="bold")+labs(title="SNAP 1964 - Today", subtitle="Big Events in SNAP History", caption="Source:USDA Food Nutrition Services \n https://www.fns.usda.gov/snap/short-history-snap")
+                ) + geom_text(data=snap_event, aes(x=year,y=-0.2,label=year,vjust=-7, fontface="bold"),size=2.5, color='turquoise4')+geom_point(aes(y=0), size=2,color='turquoise4')+geom_text(aes(y=text_position,label=event),size=3.5,fontface="bold")+labs(title="SNAP 1964 - Today", subtitle="Big Events in SNAP History", caption="Source:USDA Food Nutrition Services \n https://www.fns.usda.gov/snap/short-history-snap")
 
 ```
 ```{r echo=FALSE}
