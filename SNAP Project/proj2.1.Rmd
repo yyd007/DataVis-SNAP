@@ -52,10 +52,9 @@ s2<-c("Illinois", "Indiana", "Michigan", "Ohio", "Wisconsin", "Iowa", "Kansas", 
 s3<-c("Delaware", "Florida", "Georgia", "Maryland", "North Carolina", "South Carolina", "Virginia", "District of Columbia", "Alabama", "Kentucky", "Mississippi", "Tennessee", "Arkansas", "Louisiana", "Oklahoma", "Texas")
 s4<-c("Arizona", "Colorado", "Idaho", "Montana", "Nevada", "New Mexico", "Utah", "Wyoming","Alaska", "California", "Hawaii", "Oregon", "Washington")
 
-#part_18$region <- NA
+
 for (row in 1:nrow(part_18)) {
   state <- part_18[row, "state"]
-  #region <- part_18[row, "region"]
   if (state %in% s1) {
   region = r1
 }else if(state %in% s2){
@@ -69,6 +68,83 @@ for (row in 1:nrow(part_18)) {
 
 ```
 
+```{r include=FALSE}
+part_18
+data<-part_18[c("state","sep18","region")]
+data
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.align = "center",out.width = '90%'}
+data = data %>% arrange(region, as.numeric(as.character(sep18)))
+
+# Set a number of 'empty bar' to add at the end of each group
+empty_bar=3
+to_add = data.frame( matrix(NA, empty_bar*nlevels(data$region), ncol(data)) )
+colnames(to_add) = colnames(data)
+to_add$group=rep(levels(data$region), each=empty_bar)
+data=rbind(data, to_add)
+data=data %>% arrange(region)
+data$id=seq(1, nrow(data))
+
+
+# Get the name and the y position of each label
+label_data=data
+number_of_bar=nrow(label_data)
+angle= 90 - 360 * (label_data$id-0.5) /number_of_bar     # I substract 0.5 because the letter must have the angle of the center of the bars. Not extreme right(1) or extreme left (0)
+label_data$hjust<-ifelse( angle < -90, 1, 0)
+label_data$angle<-ifelse(angle < -90, angle+180, angle)
+ 
+# prepare a data frame for base lines
+base_data=data %>% 
+  group_by(region) %>% 
+  summarize(start=min(id), end=max(id) - empty_bar) %>% 
+  rowwise() %>% 
+  mutate(title=mean(c(start, end)))
+
+
+# prepare a data frame for grid (scales)
+grid_data = base_data
+grid_data$end = grid_data$end[ c( nrow(grid_data), 1:nrow(grid_data)-1)] + 1
+grid_data$start = grid_data$start - 1
+grid_data=grid_data[-1,]
+
+
+# Make the plot
+p = ggplot(data, aes(x=as.factor(id), y=as.numeric(as.character(sep18)), fill=region)) +       # Note that id is a factor. If x is numeric, there is some space between the first bar
+
+  geom_bar(aes(x=as.factor(id), y=as.numeric(as.character(sep18)), fill=region), stat="identity", alpha=0.5) +
+
+  # Add a val=100/75/50/25 lines. I do it at the beginning to make sur barplots are OVER it.
+  geom_segment(data=grid_data, aes(x = end, y = 4000000, xend = start, yend = 4000000), colour = "grey", alpha=1, size=0.1 , inherit.aes = FALSE ) +
+  geom_segment(data=grid_data, aes(x = end, y = 3000000, xend = start, yend = 3000000), colour = "grey", alpha=1, size=0.1 , inherit.aes = FALSE ) +
+  geom_segment(data=grid_data, aes(x = end, y = 2000000, xend = start, yend = 2000000), colour = "grey", alpha=1, size=0.1 , inherit.aes = FALSE ) +
+  geom_segment(data=grid_data, aes(x = end, y = 1000000, xend = start, yend = 1000000), colour = "grey", alpha=1, size=0.1 , inherit.aes = FALSE ) +
+
+  # Add text showing the value of each 100/75/50/25 lines
+  annotate("text", x = rep(max(data$id),4), y = c(1, 2, 3, 4), label = c("1", "2", "3", "4") , color="grey", size=3 , angle=0, fontface="bold", hjust=1) +
+
+  geom_bar(aes(x=as.factor(id), y=as.numeric(as.character(sep18)), fill=region), stat="identity", alpha=0.5) +
+  ylim(-2000000,4000000) +
+theme_minimal()+
+theme(
+  legend.position = "none",
+  axis.text = element_blank(),
+  axis.title = element_blank(),
+  panel.grid = element_blank(),
+  # plot.margin = unit(rep(-1,4), "cm"),
+  plot.title = element_text()
+)+
+  coord_polar()+
+  geom_text(data=label_data, aes(x=id, y=as.numeric(as.character(sep18))+800000, label=state, hjust=hjust), color="black", fontface="bold",alpha=0.6, size=2.5, angle= label_data$angle, inherit.aes = FALSE ) +
+
+  # Add base line information
+  geom_segment(data=base_data, aes(x = start, y =-100000, xend = end, yend = -100000), colour = "black", alpha=0.8, size=0.6, inherit.aes = FALSE )  +
+  geom_text(data=base_data, aes(x = title, y = -300000, label=region), hjust=c(0.9,1,0.35,0), colour = "black", alpha=0.8, size=3.5, fontface="bold", inherit.aes = FALSE)+
+  labs(title="US SNAP Participation by State in 2018", subtitle="SNAP participation population has huge range across states in different regions", caption = "Source: USDA Food Nutrition Services \n  https://www.fns.usda.gov/pd/supplemental-nutrition-assistance-program-snap")
+
+p
+
+```
 
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE,fig.align = "center",out.width = '80%'}
