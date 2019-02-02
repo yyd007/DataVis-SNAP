@@ -8,6 +8,7 @@ output:
 ---
 
 ```{r setup, include=FALSE}
+library(plotly)
 library(MASS)
 library(mosaic)
 library(knitr)
@@ -125,7 +126,7 @@ p = ggplot(data, aes(x=as.factor(id), y=as.numeric(as.character(sep18)), fill=re
   geom_bar(aes(x=as.factor(id), y=as.numeric(as.character(sep18)), fill=region), stat="identity", alpha=0.5) +
   ylim(-1500000,4000000) +
 theme_minimal()+
-theme(
+theme(plot.caption = element_text(hjust = 0),
   legend.position = "none",
   axis.text = element_blank(),
   axis.title = element_blank(),
@@ -148,14 +149,14 @@ theme(
   # Add base line information
   geom_segment(data=base_data, aes(x = start, y =-100000, xend = end, yend = -100000), colour = "black", alpha=0.8, size=0.6, inherit.aes = FALSE )  +
   geom_text(data=base_data, aes(x = title, y = -180000, label=region), hjust=c(0.9,1,0.35,0), colour = "black", alpha=0.8, size=2, fontface="bold", inherit.aes = FALSE)+
-  labs(title="US SNAP Participation by State in 2018", subtitle="SNAP participation population has huge range across states in different regions", caption = "Source: USDA Food Nutrition Services \n  https://www.fns.usda.gov/pd/supplemental-nutrition-assistance-program-snap")
+  labs(title="US SNAP Participation by State in 2018", subtitle="SNAP participation population has huge range across states in different regions", caption = "Source: USDA Food Nutrition Services\nhttps://www.fns.usda.gov/pd/supplemental-nutrition-assistance-program-snap")
 
 p
 
 ```
 
 
-```{r echo=FALSE, message=FALSE, warning=FALSE,fig.align = "center",out.width = '80%'}
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.align = "center",out.width = '80%',include=FALSE}
 part_18 <- part_18[!grepl("Guam", part_18$state),]
 
 ggplot(data=part_18,aes(x=reorder(state,as.numeric(as.character(sep18))),as.numeric(as.character(sep18))),fill="steel blue") + scale_y_continuous(label=c("0","1m","2m","3m","4m"))+geom_col() + coord_flip() +  facet_grid(region~.,scales="free_y") +
@@ -209,7 +210,7 @@ colnames(pop)[colnames(pop)=="State"] <- "state_name"
 
 pop %>%
   left_join(states, by = "state_name") %>% 
-  ggplot(mapping = aes(long, lat, group = group, fill = X..of.US)) +labs(title="US SNAP Participation per capita by State", subtitle="State SNAP participation rate has small range", caption="Source:USDA Food Nutrition Services")+theme(legend.text = element_text(size = 8),legend.title=element_text(size=6),plot.title=element_text(size=20, 
+  ggplot(mapping = aes(long, lat, group = group, fill = X..of.US)) +labs(title="US SNAP Participation per capita by State", subtitle="State SNAP participation rate has small range", caption="Source:USDA Food Nutrition Services")+theme(plot.caption = element_text(hjust = 0),legend.text = element_text(size = 8),legend.title=element_text(size=6,face="bold"),plot.title=element_text(size=20, 
                                     face="bold", 
                                     family="American Typewriter",
                                     color="black",
@@ -229,7 +230,7 @@ pop %>%
  panel.border=element_blank(),
  panel.grid.minor=element_blank(),
  plot.background=element_blank(),
- legend.position = c(.92, .5)
+ legend.position = c(.95, .5)
  )+
   geom_polygon(color = "#ffffff", size = 0.25) +
   coord_map("albers", lat0 = 39, lat1 = 45)  + labs(fill = "Participation per capita") 
@@ -250,7 +251,7 @@ state.abb[match(states$state_name,state.name)]
 dt %>%
   left_join(states, by = "state_abbv") %>% 
   ggplot(mapping = aes(long, lat, group = group, fill = FOOD_TAX14))  +labs(title="US Food Tax", subtitle="", caption="Source:USDA Food Nutrition Services
-")+theme(panel.grid.major = element_line(colour = 'transparent'),
+")+theme(plot.caption = element_text(hjust = 0),panel.grid.major = element_line(colour = 'transparent'),
          plot.title=element_text(size=20, 
                                     face="bold", 
                                     family="American Typewriter",
@@ -273,7 +274,7 @@ dt %>%
  plot.background=element_blank(),
  legend.position = c(.9, .5),
  legend.text = element_text(size = 8),
- legend.title=element_text(size=6)
+ legend.title=element_text(size=6,face="bold")
  )+
   geom_polygon(color = "#ffffff", size = 0.25) +
   coord_map("albers", lat0 = 39, lat1 = 45)  + labs(fill = "Food Tax") 
@@ -308,7 +309,7 @@ text_offset <- 0.05
 snap_event$text_position <- (text_offset * snap_event$direction) + snap_event$position
 
 ggplot(snap_event,aes(x=year,y=0,  label=event))+labs(col="events")+theme_classic()+geom_hline(yintercept=0, 
-                color = "black", size=2)+geom_segment(data=snap_event, aes(y=position,yend=0,xend=year), color='black', size=0.7)+scale_y_discrete(limits=c(-0.5,.5))+theme(axis.line.y=element_blank(),
+                color = "black", size=2)+geom_segment(data=snap_event, aes(y=position,yend=0,xend=year), color='black', size=0.7)+scale_y_discrete(limits=c(-0.5,.5))+theme(plot.caption = element_text(hjust = 0),axis.line.y=element_blank(),
                  axis.text.y=element_blank(),
                  axis.title.x=element_blank(),
                  axis.title.y=element_blank(),
@@ -332,6 +333,7 @@ ggplot(snap_event,aes(x=year,y=0,  label=event))+labs(col="events")+theme_classi
 \newline
 \newline
 \newline
+
 ```{r echo=FALSE, message=FALSE, warning=FALSE,fig.align = "center",out.width = '80%'}
 part_ben$Year <- as.Date(as.character(part_ben$Year), format = "%Y")
 snap_event$year <- as.Date(as.character(snap_event$year), format = "%Y")
@@ -342,9 +344,21 @@ ymax <- yrng[1] + 0.1*(yrng[2]-yrng[1])
 
 p2 <- ggplot()
 p2 <- p2 + geom_line(mapping=aes(x=Year, y=Participation.number.), data=part_ben , size=2, alpha=0.5,color='blue') 
-p2 <- p2 + scale_x_date("time") +  scale_y_continuous(name="participation")+ labs(title="SNAP Participation Population 1989-2018", subtitle="SNAP participation doubled over the last two decades", caption="Source:USDA Food Nutrition Services \n https://www.fns.usda.gov/snap/short-history-snap")+theme(legend.position="none")
+p2 <- p2 + scale_x_date("time")  +
+  # scale_x_discrete(limits=c("1990","1995","2000","2005","2010","2015"))+
+scale_y_continuous(name="participation")+ labs(title="SNAP Participation Population 1989-2018", subtitle="SNAP participation doubled over the last two decades", caption="Source:USDA Food Nutrition Services \n https://www.fns.usda.gov/snap/short-history-snap")+theme(plot.caption = element_text(hjust = 0),plot.title=element_text(size=20, 
+                                    face="bold", 
+                                    family="American Typewriter",
+                                    color="black",
+                                    hjust=0.5,
+                                    lineheight=1.2),  # title
+            plot.subtitle=element_text(size=15, 
+                                       family="American Typewriter",
+                                       face="bold",
+                                       hjust=0.5))
 p2
 ```
+
 \newline
 \newline
 From 1989 to 2018, the SNAP participation number in US increased from below two millions to about four millions, almost doubled in two decades. The peaks within the two decades happened at year 1994 and year 2013, reached over 2.5 millions and over 4.5 millions respectively. Connecting to the previous SNAP timeline graph, SNAP reached participation milestone for those two years.  The Food Stamp Nutrition Education program at 1992 and Mickey Leland Childhood Hunger Relief Act at 1993 influenced the growth of SNAP, the participants increased dramatically afterwards. And from 2002 to 2014, there are five events happened that drove the SNAP participaion greatly. 
@@ -353,7 +367,41 @@ From 1989 to 2018, the SNAP participation number in US increased from below two 
 \newline
 \newline
 \newline
+
+```{r include=FALSE}
+time.series<-read.xlsx(("TimeSeries.xlsx"),header=T,sheetIndex = 1)[,1:4][2:50,]
+colnames(time.series) <- c("Year","PopChange","UmRateChange","PovertyRateChange")
+time.series
+# as.numeric(as.character(time.series$PovertyRateChange))
+```
 \newline
+\newline
+
+```{r}
+x <- list(
+  title = "Year"
+)
+y <- list(
+  title = "% Change"
+)
+p<-plot_ly(y=as.numeric(as.character(time.series$PopChange)), x=as.numeric(as.character(time.series$Year)) , type="scatter", mode="markers+lines",xlab="Year",ylab="Percentage Change",name="Population")%>%
+  layout(xaxis = x, yaxis = y)
+p<-add_trace(p, y=~as.numeric(as.character(time.series$UmRateChange)), x=~as.numeric(as.character(time.series$Year)) , type="scatter", mode="markers+lines",name="Unemployment Rate" )
+p<-add_trace(p, y=~as.numeric(as.character(time.series$PovertyRateChange)), x=~as.numeric(as.character(time.series$Year)), type="scatter", mode="markers+lines",name="Poverty Rate" )
+p
+```
+
+```{r}
+p2 <- data %>%
+  tail(60) %>%
+  ggplot( aes(x=date, y=value)) +
+    geom_line(color="#69b3a2") +
+    geom_point(color="#69b3a2", size=2) +
+    ggtitle("Connected scatterplot") +
+    ylab("bitcoin price ($)") +
+    theme_ipsum()
+```
+
 ```{r echo=FALSE, message=FALSE, warning=FALSE,fig.align = "center",out.width = '80%'}
 um<-read.xlsx("um_79to18.xlsx",header=TRUE,sheetIndex = 1)[11:40,]
 # um
@@ -363,7 +411,17 @@ part_ben$um<-um$Unemployment.Rate
 b <- ggplot(part_ben, aes(x = Year, y=Benefit.dollar.person.))
 
 b + geom_point(aes(color = um), size = 3) +
-  scale_color_gradientn(colors = c("#00AFBB", "#E7B800", "#FC4E07"))+labs(y = "Benefits per person ($)",x = "Year",colour = "Unemployment Rate",title="SNAP benefit dollar per person and Unemployment Rate 1989-2018", subtitle="Overall the SNAP participation and benefits increased over the last two decades",caption="Source:Bureau of Labor Statistics \n https://data.bls.gov/timeseries/LNS14000000")
+  # scale_x_continuous(label=c(1990,1995,2000,2005,2010,2015))+
+  scale_color_gradientn(colors = c("#00AFBB", "#E7B800", "#FC4E07"))+labs(y = "Benefits per person ($)",x = "Year",colour = "Unemployment Rate",title="SNAP benefit dollar per person and Unemployment Rate 1989-2018", subtitle="Overall the SNAP participation and benefits increased over the last two decades",caption="Source:Bureau of Labor Statistics \n https://data.bls.gov/timeseries/LNS14000000")+theme(plot.caption = element_text(hjust = 0),plot.title=element_text(size=20, 
+                                    face="bold", 
+                                    family="American Typewriter",
+                                    color="black",
+                                    hjust=0.5,
+                                    lineheight=1.2),  # title
+            plot.subtitle=element_text(size=15, 
+                                       family="American Typewriter",
+                                       face="bold",
+                                       hjust=0.5))
 ```
 \newline
 \newline
