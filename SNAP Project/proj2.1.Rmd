@@ -8,6 +8,7 @@ output:
 ---
 
 ```{r setup, include=FALSE}
+library(fmsb)
 library(plotly)
 library(MASS)
 library(mosaic)
@@ -287,6 +288,7 @@ Drawing a US Food Tax map across states and comparing it with the previous parti
 \newline
 \newline
 \newline
+
 ```{r echo=FALSE, message=FALSE, warning=FALSE,fig.align = "center",out.width = '100%'}
 
 snap_event<-read.xlsx("snap_event.xlsx",head=T,sheetIndex = 1)
@@ -309,7 +311,7 @@ text_offset <- 0.05
 snap_event$text_position <- (text_offset * snap_event$direction) + snap_event$position
 
 ggplot(snap_event,aes(x=year,y=0,  label=event))+labs(col="events")+theme_classic()+geom_hline(yintercept=0, 
-                color = "black", size=2)+geom_segment(data=snap_event, aes(y=position,yend=0,xend=year), color='black', size=0.7)+scale_y_discrete(limits=c(-0.5,.5))+theme(plot.caption = element_text(hjust = 0),axis.line.y=element_blank(),
+                color = "black", size=1.5)+geom_segment(data=snap_event, aes(y=position,yend=0,xend=year), color='black', size=0.7)+scale_y_discrete(limits=c(-0.5,.5))+theme(plot.caption = element_text(hjust = 0),axis.line.y=element_blank(),
                  axis.text.y=element_blank(),
                  axis.title.x=element_blank(),
                  axis.title.y=element_blank(),
@@ -327,14 +329,15 @@ ggplot(snap_event,aes(x=year,y=0,  label=event))+labs(col="events")+theme_classi
                                        family="American Typewriter",
                                        face="bold",
                                        hjust=0.5)
-                ) + geom_text(data=snap_event, aes(x=year,y=-0.2,label=year,vjust=-5, fontface="bold"),size=1.5, color='turquoise4')+geom_point(aes(y=0), size=3,color='turquoise4')+geom_text(aes(y=text_position,label=event),size=2,fontface="bold")+labs(title="SNAP 1964 - Today", subtitle="Big Events in SNAP History", caption="Source:USDA Food Nutrition Services \n https://www.fns.usda.gov/snap/short-history-snap")
+                ) + geom_text(data=snap_event, aes(x=year,y=-0.2,label=year,vjust=-5, fontface="bold"),size=1.5, color='turquoise4')+geom_point(aes(y=0), size=2,color='turquoise4')+geom_text(aes(y=text_position,label=event),size=2,fontface="bold")+labs(title="SNAP 1964 - Today", subtitle="Big Events in SNAP History", caption="Source:USDA Food Nutrition Services \n https://www.fns.usda.gov/snap/short-history-snap")
 
 ```
+
 \newline
 \newline
 \newline
 
-```{r echo=FALSE, message=FALSE, warning=FALSE,fig.align = "center",out.width = '80%'}
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.align = "center",out.width = '80%',include=FALSE}
 part_ben$Year <- as.Date(as.character(part_ben$Year), format = "%Y")
 snap_event$year <- as.Date(as.character(snap_event$year), format = "%Y")
 
@@ -377,7 +380,7 @@ time.series
 \newline
 \newline
 
-```{r}
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.align = "center",out.width = '80%'}
 x <- list(
   title = "Year"
 )
@@ -391,15 +394,15 @@ p<-add_trace(p, y=~as.numeric(as.character(time.series$PovertyRateChange)), x=~a
 p
 ```
 
-```{r}
-p2 <- data %>%
-  tail(60) %>%
-  ggplot( aes(x=date, y=value)) +
-    geom_line(color="#69b3a2") +
-    geom_point(color="#69b3a2", size=2) +
-    ggtitle("Connected scatterplot") +
-    ylab("bitcoin price ($)") +
-    theme_ipsum()
+```{r echo=FALSE}
+# p2 <- data %>%
+#   tail(60) %>%
+#   ggplot( aes(x=date, y=value)) +
+#     geom_line(color="#69b3a2") +
+#     geom_point(color="#69b3a2", size=2) +
+#     ggtitle("Connected scatterplot") +
+#     ylab("bitcoin price ($)") +
+#     theme_ipsum()
 ```
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE,fig.align = "center",out.width = '80%'}
@@ -427,6 +430,59 @@ b + geom_point(aes(color = um), size = 3) +
 \newline
 
 From 1989 to 2018, the benefits per person increased dramatically. From around 50 dollars to above 250 dollars, the dollar benefitfive is currenly five times more than from the beginning. The color scale shows the range of unemployment rate over the years. The unemployment rate fluctuates from 1989 to 2008, and increased dramatically around 2008 to 2014, which is the financial crisis period. The benefit per person decreased a little, but after the crisis, the benefit jumped very high till around 250 dollars per person and came back to around 125 in the most recent year.  
+
+```{r include=FALSE}
+# Create data: note in High school for several students
+data = as.data.frame(matrix(
+  c(6.4, 6.3,6.2,22, 23,24,81,78,74),
+  nrow=3
+))
+colnames(data)=c("WIC" ,"School Lunch" , "SNAP")
+rownames(data)=c("2016","2017","2018")
+data
+# To use the fmsb package, I have to add 2 lines to the dataframe: the max and min of each topic to show on the plot!
+data=rbind(rep(200,10) , rep(0,10) , data)
+
+#==================
+# Plot 1: Default radar chart proposed by the library:
+radarchart(data)
+
+#==================
+# Plot 2: Same plot with custom features
+# colors_border=c( rgb(0.2,0.5,0.5,0.9), rgb(0.8,0.2,0.5,0.9) , rgb(0.7,0.5,0.1,0.9) )
+# colors_in=c( rgb(0.2,0.5,0.5,0.4), rgb(0.8,0.2,0.5,0.4) , rgb(0.7,0.5,0.1,0.4) )
+# radarchart( data  , axistype=1 ,
+#     #custom polygon
+#     pcol=colors_border , pfcol=colors_in , plwd=4 , plty=1,
+#     #custom the grid
+#     cglcol="grey", cglty=1, axislabcol="grey", caxislabels=seq(0,20,5), cglwd=0.8,
+#     #custom labels
+#     vlcex=0.8
+#     )
+# legend(x=0.7, y=1, legend = rownames(data[-c(1,2),]), bty = "n", pch=20 , col=colors_in , text.col = "grey", cex=1.2, pt.cex=3)
+
+#=================
+# Plot3: If you remove the 2 first lines, the function compute the max and min of each variable with the available data:
+# colors_border=c( rgb(0.2,0.5,0.5,0.9), rgb(0.8,0.2,0.5,0.9) , rgb(0.7,0.5,0.1,0.9) )
+# colors_in=c( rgb(0.2,0.5,0.5,0.4), rgb(0.8,0.2,0.5,0.4) , rgb(0.7,0.5,0.1,0.4) )
+# radarchart( data[-c(1,2),]  , axistype=0 , maxmin=F,
+#     #custom polygon
+#     pcol=colors_border , pfcol=colors_in , plwd=4 , plty=1,
+#     #custom the grid
+#     cglcol="grey", cglty=1, axislabcol="black", cglwd=0.8,
+#     #custom labels
+#     vlcex=0.8
+#     )
+# legend(x=0.7, y=1, legend = rownames(data[-c(1,2),]), bty = "n", pch=20 , col=colors_in , text.col = "grey", cex=1.2, pt.cex=3)
+```
+
+
+
+
+
+
+
+
 
 
 
