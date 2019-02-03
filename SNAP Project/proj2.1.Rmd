@@ -8,6 +8,7 @@ output:
 ---
 
 ```{r setup, include=FALSE}
+library(RColorBrewer)
 library(fmsb)
 library(plotly)
 library(MASS)
@@ -32,6 +33,7 @@ library(scales)
 library(lubridate)
 library(ggplot2)
 devtools::install_github("UrbanInstitute/urbnmapr")
+
 ```
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
@@ -74,6 +76,7 @@ part_18
 data<-part_18[c("state","sep18","region")]
 data
 ```
+
 \newline
 \newline
 \newline
@@ -116,7 +119,7 @@ grid_data=grid_data[-1,]
 
 
 # Make the plot
-p = ggplot(data, aes(x=as.factor(id), y=as.numeric(as.character(sep18)), fill=region)) +       # Note that id is a factor. If x is numeric, there is some space between the first bar
+p = ggplot(data, aes(x=as.factor(id), y=as.numeric(as.character(sep18)), fill=region))+ scale_fill_brewer(palette="Dark2")+       # Note that id is a factor. If x is numeric, there is some space between the first bar
 
   geom_bar(aes(x=as.factor(id), y=as.numeric(as.character(sep18)), fill=region), stat="identity", alpha=0.5) +
 
@@ -127,12 +130,12 @@ p = ggplot(data, aes(x=as.factor(id), y=as.numeric(as.character(sep18)), fill=re
   geom_segment(data=grid_data, aes(x = end, y = 1000000, xend = start, yend = 1000000), colour = "grey", alpha=1, size=0.1 , inherit.aes = FALSE ) +
 
   # Add text showing the value of each 100/75/50/25 lines
-  annotate("text", x = rep(max(data$id),4), y = c(1, 2, 3, 4), label = c("1", "2", "3", "4") , color="grey", size=3 , angle=0, fontface="bold", hjust=1) +
+  annotate("text", x = rep(max(data$id),4), y = c(1000000, 2000000, 3000000, 4000000), label = c("1m", "2m", "3m", "4m") , color="grey", size=3 , angle=0, fontface="bold", hjust=5) +
 
   geom_bar(aes(x=as.factor(id), y=as.numeric(as.character(sep18)), fill=region), stat="identity", alpha=0.5) +
   ylim(-1500000,4000000) +
 theme_minimal()+
-theme(plot.caption = element_text(hjust = 0),
+theme(plot.caption = element_text(hjust = 0,size=6),
   legend.position = "none",
   axis.text = element_blank(),
   axis.title = element_blank(),
@@ -146,16 +149,16 @@ theme(plot.caption = element_text(hjust = 0),
                                     lineheight=1.2),  # title
             plot.subtitle=element_text(size=10, 
                                        family="American Typewriter",
-                                       face="bold",
+                                       
                                        hjust=0.5)
 )+
   coord_polar()+
-  geom_text(data=label_data, aes(x=id, y=as.numeric(as.character(sep18))+800000, label=state, hjust=hjust), color="black", fontface="bold",alpha=0.6, size=2, angle= label_data$angle, inherit.aes = FALSE ) +
+  geom_text(data=label_data, aes(x=id, y=as.numeric(as.character(sep18))+100000, label=state, hjust=hjust), color="black", fontface="bold",alpha=0.6, size=2, angle= label_data$angle, inherit.aes = FALSE ) +
 
   # Add base line information
   geom_segment(data=base_data, aes(x = start, y =-100000, xend = end, yend = -100000), colour = "black", alpha=0.8, size=0.6, inherit.aes = FALSE )  +
   geom_text(data=base_data, aes(x = title, y = -180000, label=region), hjust=c(0.9,1,0.35,0), colour = "black", alpha=0.8, size=2, fontface="bold", inherit.aes = FALSE)+
-  labs(title="US SNAP Participation by State in 2018", subtitle="SNAP participation population has huge range across states in different regions", caption = "Source: USDA Food Nutrition Services\nhttps://www.fns.usda.gov/pd/supplemental-nutrition-assistance-program-snap")
+  labs(title="US SNAP Participation by State in 2018", subtitle="SNAP participation population(number) has huge range across states in different regions", caption = "Source: USDA Food Nutrition Services\nhttps://www.fns.usda.gov/pd/supplemental-nutrition-assistance-program-snap")
 
 p
 
@@ -165,7 +168,7 @@ p
 ```{r echo=FALSE, message=FALSE, warning=FALSE,fig.align = "center",out.width = '80%',include=FALSE}
 part_18 <- part_18[!grepl("Guam", part_18$state),]
 
-ggplot(data=part_18,aes(x=reorder(state,as.numeric(as.character(sep18))),as.numeric(as.character(sep18))),fill="steel blue") + scale_y_continuous(label=c("0","1m","2m","3m","4m"))+geom_col() + coord_flip() +  facet_grid(region~.,scales="free_y") +
+ggplot(data=part_18,aes(x=reorder(state,as.numeric(as.character(sep18))),as.numeric(as.character(sep18))),fill="steel blue") + scale_fill_brewer(palette="Dark2")+scale_y_continuous(label=c("0","1m","2m","3m","4m"))+geom_col() + coord_flip() +  facet_grid(region~.,scales="free_y") +
   labs(x = "state", y = "Participation population 2018",
        title="US SNAP Participation by State in 2018", subtitle="SNAP participation population has huge range across states in different regions", caption = "Source: USDA Food Nutrition Services \n  https://www.fns.usda.gov/pd/supplemental-nutrition-assistance-program-snap") +
   theme( axis.text=element_text(color="black"), strip.text.y=element_text(size=9), strip.background=element_rect(fill="white"), panel.grid.major.y=element_blank(), panel.grid.minor.x=element_blank(), axis.ticks=element_blank()) 
@@ -216,15 +219,15 @@ colnames(pop)[colnames(pop)=="State"] <- "state_name"
 
 pop %>%
   left_join(states, by = "state_name") %>% 
-  ggplot(mapping = aes(long, lat, group = group, fill = X..of.US)) +labs(title="US SNAP Participation per capita by State", subtitle="State SNAP participation rate has small range", caption="Source:USDA Food Nutrition Services")+theme(plot.caption = element_text(hjust = 0),legend.text = element_text(size = 8),legend.title=element_text(size=6,face="bold"),plot.title=element_text(size=20, 
+  ggplot(mapping = aes(long, lat, group = group, fill = X..of.US)) +labs(title="US SNAP Participation per capita by State", subtitle="State SNAP participation rate has small range", caption="Source:USDA Food Nutrition Services")+theme(plot.caption = element_text(hjust = 0),legend.text = element_text(size = 8),legend.title=element_text(size=6,face="bold"),plot.title=element_text(size=17, 
                                     face="bold", 
                                     family="American Typewriter",
                                     color="black",
                                     hjust=0.5,
                                     lineheight=1.2),  # title
-            plot.subtitle=element_text(size=15, 
+            plot.subtitle=element_text(size=12, 
                                        family="American Typewriter",
-                                       face="bold",
+                                       
                                        hjust=0.5),  # subtitlepanel.grid.major = element_line(colour = 'transparent'),
  axis.title.x=element_blank(), 
  axis.text.x=element_blank(),
@@ -238,8 +241,8 @@ pop %>%
  plot.background=element_blank(),
  legend.position = c(.95, .5)
  )+
-  geom_polygon(color = "#ffffff", size = 0.25) +
-  coord_map("albers", lat0 = 39, lat1 = 45)  + labs(fill = "Participation per capita") 
+  geom_polygon(color = "grey", size = 0.25) +
+  coord_map("albers", lat0 = 39, lat1 = 45)  + labs(fill = "Participation per capita")
 ```
 \newline
 The first map is the US base map with state names labeled. From the US state map, combining with SNAP participation data, we can see that state AL, ND, SD and NH have the highest participation rate. This is reasonable as these states are less developed and tend to have more poor people. The participation rate range is not very big, therefore the colors are generally darker. Most of the states have participation rate around 0.00002 or lower.  
@@ -256,17 +259,17 @@ state.abb[match(states$state_name,state.name)]
 ```{r echo=FALSE, message=FALSE, warning=FALSE,fig.align = "center",out.width = '80%'}
 dt %>%
   left_join(states, by = "state_abbv") %>% 
-  ggplot(mapping = aes(long, lat, group = group, fill = FOOD_TAX14))  +labs(title="US Food Tax", subtitle="", caption="Source:USDA Food Nutrition Services
+  ggplot(mapping = aes(long, lat, group = group, fill = FOOD_TAX14))  +labs(title="US Food Tax", subtitle="Most of the states have low food tax", caption="Source:USDA Food Nutrition Services
 ")+theme(plot.caption = element_text(hjust = 0),panel.grid.major = element_line(colour = 'transparent'),
-         plot.title=element_text(size=20, 
+         plot.title=element_text(size=17, 
                                     face="bold", 
                                     family="American Typewriter",
                                     color="black",
                                     hjust=0.5,
                                     lineheight=1.2),  # title
-            plot.subtitle=element_text(size=15, 
+            plot.subtitle=element_text(size=12, 
                                        family="American Typewriter",
-                                       face="bold",
+                                       
                                        hjust=0.5),
  axis.title.x=element_blank(), 
  axis.text.x=element_blank(),
@@ -282,13 +285,16 @@ dt %>%
  legend.text = element_text(size = 8),
  legend.title=element_text(size=6,face="bold")
  )+
-  geom_polygon(color = "#ffffff", size = 0.25) +
+  geom_polygon(color = "grey", size = 0.25) +
   coord_map("albers", lat0 = 39, lat1 = 45)  + labs(fill = "Food Tax") 
 ```
 \newline
 \newline
 Drawing a US Food Tax map across states and comparing it with the previous participation rate map, we can see that places with higher SNAP participation rates do not have high food tax. And places with high food tax rates tend to have low SNAP participation rates. 
 
+\newline
+\newline
+\newline
 \newline
 \newline
 \newline
@@ -316,7 +322,7 @@ text_offset <- 0.05
 snap_event$text_position <- (text_offset * snap_event$direction) + snap_event$position
 
 ggplot(snap_event,aes(x=year,y=0,  label=event))+labs(col="events")+theme_classic()+geom_hline(yintercept=0, 
-                color = "black", size=1.5)+geom_segment(data=snap_event, aes(y=position,yend=0,xend=year), color='black', size=0.7)+scale_y_discrete(limits=c(-0.5,.5))+theme(plot.caption = element_text(hjust = 0),axis.line.y=element_blank(),
+                color = "black", size=1.5)+geom_segment(data=snap_event, aes(y=position,yend=0,xend=year), color='black', size=0.7)+scale_y_discrete(limits=c(-0.5,.5))+theme(plot.caption = element_text(hjust = 0,size=6),axis.line.y=element_blank(),
                  axis.text.y=element_blank(),
                  axis.title.x=element_blank(),
                  axis.title.y=element_blank(),
@@ -324,23 +330,27 @@ ggplot(snap_event,aes(x=year,y=0,  label=event))+labs(col="events")+theme_classi
                  axis.text.x =element_blank(),
                  axis.ticks.x =element_blank(),
                  axis.line.x =element_blank(),
-                 legend.position = "bottom",plot.title=element_text(size=20, 
+                 legend.position = "bottom",plot.title=element_text(size=16, 
                                     face="bold", 
                                     family="American Typewriter",
                                     color="black",
                                     hjust=0.5,
                                     lineheight=1.2),  # title
-            plot.subtitle=element_text(size=15, 
+            plot.subtitle=element_text(size=12, 
                                        family="American Typewriter",
-                                       face="bold",
+                                       
                                        hjust=0.5)
-                ) + geom_text(data=snap_event, aes(x=year,y=-0.2,label=year,vjust=-5, fontface="bold"),size=1.5, color='turquoise4')+geom_point(aes(y=0), size=2,color='turquoise4')+geom_text(aes(y=text_position,label=event),size=2,fontface="bold")+labs(title="SNAP 1964 - Today", subtitle="Big Events in SNAP History", caption="Source:USDA Food Nutrition Services \n https://www.fns.usda.gov/snap/short-history-snap")
+                ) + geom_text(data=snap_event, aes(x=year,y=-0.2,label=year,vjust=-5, fontface="bold"),size=1.5, color='turquoise4')+geom_point(aes(y=0), size=2,color='turquoise4')+geom_text(aes(y=text_position,label=event),size=2,fontface="bold")+labs(title="Big Events in SNAP History", subtitle="SNAP 1964 - Today", caption="Source:USDA Food Nutrition Services\nhttps://www.fns.usda.gov/snap/short-history-snap")
 
 ```
 
 \newline
 \newline
 \newline
+\newline
+\newline
+From 1989 to 2018, the SNAP participation number in US increased from below two millions to about four millions, almost doubled in two decades. The peaks within the two decades happened at year 1994 and year 2013, reached over 2.5 millions and over 4.5 millions respectively. Connecting to the previous SNAP timeline graph, SNAP reached participation milestone for those two years.  The Food Stamp Nutrition Education program at 1992 and Mickey Leland Childhood Hunger Relief Act at 1993 influenced the growth of SNAP, the participants increased dramatically afterwards. And from 2002 to 2014, there are five events happened that drove the SNAP participaion greatly. 
+
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE,fig.align = "center",out.width = '80%',include=FALSE}
 part_ben$Year <- as.Date(as.character(part_ben$Year), format = "%Y")
@@ -354,7 +364,7 @@ p2 <- ggplot()
 p2 <- p2 + geom_line(mapping=aes(x=Year, y=Participation.number.), data=part_ben , size=2, alpha=0.5,color='blue') 
 p2 <- p2 + scale_x_date("time")  +
   # scale_x_discrete(limits=c("1990","1995","2000","2005","2010","2015"))+
-scale_y_continuous(name="participation")+ labs(title="SNAP Participation Population 1989-2018", subtitle="SNAP participation doubled over the last two decades", caption="Source:USDA Food Nutrition Services \n https://www.fns.usda.gov/snap/short-history-snap")+theme(plot.caption = element_text(hjust = 0),plot.title=element_text(size=20, 
+scale_y_continuous(name="participation")+ labs(title="SNAP Participation Population 1989-2018", subtitle="SNAP participation doubled over the last two decades", caption="Source:USDA Food Nutrition Services\nhttps://www.fns.usda.gov/snap/short-history-snap")+theme(plot.caption = element_text(hjust = 0),plot.title=element_text(size=20, 
                                     face="bold", 
                                     family="American Typewriter",
                                     color="black",
@@ -367,9 +377,6 @@ scale_y_continuous(name="participation")+ labs(title="SNAP Participation Populat
 p2
 ```
 
-\newline
-\newline
-From 1989 to 2018, the SNAP participation number in US increased from below two millions to about four millions, almost doubled in two decades. The peaks within the two decades happened at year 1994 and year 2013, reached over 2.5 millions and over 4.5 millions respectively. Connecting to the previous SNAP timeline graph, SNAP reached participation milestone for those two years.  The Food Stamp Nutrition Education program at 1992 and Mickey Leland Childhood Hunger Relief Act at 1993 influenced the growth of SNAP, the participants increased dramatically afterwards. And from 2002 to 2014, there are five events happened that drove the SNAP participaion greatly. 
 
 \newline
 \newline
@@ -385,7 +392,14 @@ time.series
 \newline
 \newline
 
-```{r echo=FALSE, message=FALSE, warning=FALSE, fig.align = "center",out.width = '80%'}
+```{r echo=FALSE, message=FALSE, warning=FALSE, fig.align = "center",out.width = '90%'}
+m <- list(
+  l = 150,
+  r = 50,
+  b = 100,
+  t = 100,
+  pad = 4
+)
 x <- list(
   title = "Year"
 )
@@ -393,13 +407,26 @@ y <- list(
   title = "% Change"
 )
 p<-plot_ly(y=as.numeric(as.character(time.series$PopChange)), x=as.numeric(as.character(time.series$Year)) , type="scatter", mode="markers+lines",xlab="Year",ylab="Percentage Change",name="Population")%>%
-  layout(xaxis = x, yaxis = y)
+  layout(xaxis = x, yaxis = y,title="SNAP Participants and Economic Indicators:\nPercentage Change 1969 - 2018")%>%layout(legend = list(x = 100, y = 0.8))%>%layout(autosize = F, width = 800, height = 500, margin = m)
 p<-add_trace(p, y=~as.numeric(as.character(time.series$UmRateChange)), x=~as.numeric(as.character(time.series$Year)) , type="scatter", mode="markers+lines",name="Unemployment Rate" )
 p<-add_trace(p, y=~as.numeric(as.character(time.series$PovertyRateChange)), x=~as.numeric(as.character(time.series$Year)), type="scatter", mode="markers+lines",name="Poverty Rate" )
 p
 ```
 
-```{r echo=FALSE}
+\newline
+\newline
+\newline
+\newline
+\newline
+\newline
+Overall, the changes of SNAP participation population, unemployment rate, and poverty rate have similar trends. Unemployment rate change fluctuates more than the other two rates, while the poverty rate change is the most consistent over the years. One outlier is in 1971, the SNAP population doubled compared to the previous year and then came back.
+\newline
+\newline
+\newline
+\newline
+\newline
+\newline
+```{r include=FALSE}
 # p2 <- data %>%
 #   tail(60) %>%
 #   ggplot( aes(x=date, y=value)) +
@@ -410,43 +437,89 @@ p
 #     theme_ipsum()
 ```
 
-```{r echo=FALSE, message=FALSE, warning=FALSE,fig.align = "center",out.width = '80%'}
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.align = "right",out.width = '85%'}
 um<-read.xlsx("um_79to18.xlsx",header=TRUE,sheetIndex = 1)[11:40,]
+
 # um
 # head(part_ben)
 part_ben$um<-um$Unemployment.Rate
 
 b <- ggplot(part_ben, aes(x = Year, y=Benefit.dollar.person.))
 
-b + geom_point(aes(color = um), size = 3) +
+b + geom_point(aes(color = um), size = 4) +
   # scale_x_continuous(label=c(1990,1995,2000,2005,2010,2015))+
-  scale_color_gradientn(colors = c("#00AFBB", "#E7B800", "#FC4E07"))+labs(y = "Benefits per person ($)",x = "Year",colour = "Unemployment Rate",title="SNAP benefit dollar per person and Unemployment Rate 1989-2018", subtitle="Overall the SNAP participation and benefits increased over the last two decades",caption="Source:Bureau of Labor Statistics \n https://data.bls.gov/timeseries/LNS14000000")+theme(plot.caption = element_text(hjust = 0),plot.title=element_text(size=14, 
+  scale_color_gradientn(colors = c("#00AFBB", "#E7B800", "#FC4E07"))+labs(y = "Benefits per person ($)",x = "Year",colour = "Unemployment Rate",title="SNAP benefit dollar per person and Unemployment Rate 1989-2018", subtitle="Overall the SNAP participation and benefits increased over the last two decades",caption="Source:Bureau of Labor Statistics\n https://data.bls.gov/timeseries/LNS14000000")+theme(plot.caption = element_text(hjust = 0),plot.title=element_text(size=11, 
                                     face="bold", 
                                     family="American Typewriter",
                                     color="black",
                                     hjust=0.5,
                                     lineheight=1.2),  # title
-            plot.subtitle=element_text(size=11, 
+            plot.subtitle=element_text(size=10, 
                                        family="American Typewriter",
-                                       face="bold",
                                        hjust=0.5))
 ```
+\newline
+\newline
 \newline
 \newline
 
 From 1989 to 2018, the benefits per person increased dramatically. From around 50 dollars to above 250 dollars, the dollar benefitfive is currenly five times more than from the beginning. The color scale shows the range of unemployment rate over the years. The unemployment rate fluctuates from 1989 to 2008, and increased dramatically around 2008 to 2014, which is the financial crisis period. The benefit per person decreased a little, but after the crisis, the benefit jumped very high till around 250 dollars per person and came back to around 125 in the most recent year.  
 
-```{r echo=FALSE, message=FALSE, warning=FALSE,fig.align = "center",out.width = '80%'}
+\newline
+\newline
+\newline
+\newline
+\newline
+\newline
+
+FOOD AND NUTRITION SERVICE\newline
+The Budget provides funding for the major nutrition assistance programs, accounting for projected
+program participation and food cost inflation. It seeks to prevent and reduce food insecurity and
+to improve the nutritional status of recipients.
+
+To support FNS’ work to identify and eliminate fraud, waste, and abuse, the Budget provides
+resources for program integrity efforts in all of the major programs, including SNAP, WIC, and
+the Child Nutrition Programs.
+\newline
+\newline
+\newline
+\newline
+\newline
+\newline
+
+```{r echo=FALSE, message=FALSE,warning=FALSE,fig.align = "center",out.width = '80%'}
+# fig.height=4, fig.width=4 ,
 # Create data: note in High school for several students
-data = matrix(
+colors_in=c( rgb(0.2,0.6,0.8,1), rgb(1,0.6,0,1) , rgb(0.4,0.7,0.4,1) )
+require(RColorBrewer)
+data1 = matrix(
   c(6.4, 6.3,6.2,22, 23,24,81,78,74),
   nrow=3
 )
-colnames(data)=c("WIC" ,"School Lunch" , "SNAP")
-rownames(data)=c("2016","2017","2018")
+colnames(data1)=c("WIC" ,"School Lunch" , "SNAP")
+rownames(data1)=c("2016","2017","2018")
 # barplot(data, col=colors()[c(23,89,12)] , border="white", space=0.001, font.axis=2, xlab="group")
-barplot(data, col=colors()[c(23,89,12)] , border="white", font.axis=2, beside=T, legend=rownames(data), xlab="group", font.lab=2)
+barplot(data1, border="white",  beside=T, legend=rownames(data), ylab="$Billions",main="FNS Budget Authority (billions of dollars)",col = colors_in,legend.text = TRUE,args.legend = list(x = "topright", bty = "n", inset=c(-0.084, 0.1)))
 
+data2 = matrix(
+  c(7.7,7.3,7.2,30.4,30.6,30.6,44.2,42.8,42.2),
+  nrow=3
+)
+colnames(data2)=c("WIC" ,"School Lunch" , "SNAP")
+rownames(data2)=c("2016","2017","2018")
+# barplot(data, col=colors()[c(23,89,12)] , border="white", space=0.001, font.axis=2, xlab="group")
+g2<-barplot(data2,  border="white",  beside=T, legend=rownames(data),  ylab="People Served(millions)",
+main = "People Served Through Nutrition Assistance Programs",
+        col = colors_in,legend.text = TRUE,args.legend = list(x = "topright", bty = "n", inset=c(-0.084, 0.1)))
+
+```
+
+The above two graphs show the budget distribution for FNS (Food nutrition services) and number of people served by those three nutrition programs. In specific, SNAP takes three times more FNS budget than WIC and School Lunch program. And the number of participants of SNAP are roughly the WIC and School Lunch combined. 
+Across the three years from 2016 to 2018, the budget to the WIC and SNAP declined, and correspondingly, the number of participants declined as well. A little bit more funds went to School Lunch program and the participants increased over the year.  
+
+
+```{r include=FALSE}
+# text(data)
 
 # data
 # To use the fmsb package, I have to add 2 lines to the dataframe: the max and min of each topic to show on the plot!
@@ -487,35 +560,21 @@ barplot(data, col=colors()[c(23,89,12)] , border="white", font.axis=2, beside=T,
 #     vlcex=0.8
 #     )
 # legend(x=0.7, y=1, legend = rownames(data[-c(1,2),]), bty = "n", pch=20 , col=colors_in , text.col = "grey", cex=1.2, pt.cex=3)
-```
 
-
-
-```{r echo=FALSE, message=FALSE, warning=FALSE,fig.align = "center",out.width = '80%'}
 # Create data: note in High school for several students
-data = matrix(
-  c(7.7,7.3,7.2,30.4,30.6,30.6,44.2,42.8,42.2),
-  nrow=3
-)
-colnames(data)=c("WIC" ,"School Lunch" , "SNAP")
-rownames(data)=c("2016","2017","2018")
-# barplot(data, col=colors()[c(23,89,12)] , border="white", space=0.001, font.axis=2, xlab="group")
-barplot(data, col=colors()[c(23,89,12)] , border="white", font.axis=2, beside=T, legend=rownames(data), xlab="group", font.lab=2)
+
+    
+
+# text(data,data+24,labels=data)
+# text(data,data+25, paste(data,sep="") ,cex=1) 
+# text(x = data, y = data, pos = 3, cex = 0.9, col = "white")
+# ggplot(data=data, aes(x=rownames(data), y=colnames(data), fill=group)) +
+#   geom_bar(stat="identity", position=position_dodge())+
+#   geom_text(aes(label=len), vjust=1.6, color="white",
+#             position = position_dodge(0.9), size=3.5)+
+#   scale_fill_brewer(palette="Paired")+
+#   theme_minimal()
 ```
-\newline
-\newline
-\newline
-\newline
-\newline
-FOOD AND NUTRITION SERVICE
-The Budget provides funding for the major nutrition assistance programs, accounting for projected
-program participation and food cost inflation. It seeks to prevent and reduce food insecurity and
-to improve the nutritional status of recipients.
-
-To support FNS’ work to identify and eliminate fraud, waste, and abuse, the Budget provides
-resources for program integrity efforts in all of the major programs, including SNAP, WIC, and
-the Child Nutrition Programs.
-
 
 \newline
 \newline
@@ -523,6 +582,32 @@ the Child Nutrition Programs.
 \newline
 \newline
 
+
+```{r echo=FALSE, message=FALSE,warning=FALSE,fig.align = "center",out.width = '80%'}
+data=as.data.frame(matrix(c(10.3,11.7,19.9,24,32.1,31,26.4,24.8,11.3,8.5), ncol=5))
+# data
+colnames(data)=c("Excellent", "Very Good" , "Good" , "Fair" , "Poor" )
+rownames(data)=c("Begining","AfterSixMonth")
+ 
+# To use the fmsb package, I have to add 2 lines to the dataframe: the max and min of each topic to show on the plot!
+data=rbind(rep(35,5) , rep(0,5) , data)
+
+colors_border=c( rgb(0.2,0.5,0.5,0.9), rgb(0.8,0.2,0.5,0.9) , rgb(0.7,0.5,0.1,0.9) )
+colors_in=c( rgb(0.2,0.6,0.8,0.4), rgb(1,0.6,0,0.4) , rgb(0.4,0.7,0.4,0.4) )
+radarchart(data , axistype=1,title="Self-Reported Health Status:\nnew SNAP participants VS. same participants about six months later",
+    #custom polygon
+    pcol=colors_border , pfcol=colors_in , plwd=4 , plty=1,
+    #custom the grid
+    cglcol="grey", cglty=1, axislabcol="grey", caxislabels=seq(0,40,8), cglwd=0.8,
+    #custom labels
+    vlcex=0.8 
+    )
+legend(x=0.7, y=1, legend = rownames(data[-c(1,2),]), bty = "n", pch=20 , col = colors_in, text.col = "black", cex=0.8, pt.cex=1)
+```
+
+\newline
+The longitudinal estimates compare new SNAP participants to the same participants about six months later.  Tabulations are based on the following overall sample sizes: 3,275 new-entrant households and 3,375 six-month households in the cross-sectional sample; and 3,275 new-entrant households observed at baseline and again at follow up six months later in the longitudinal sample. 
+We can see that the orange area leans towards good side more than the blue area, which suggests that the health status after six month for SNAP participants is better than the start of the survey.  
 
 
 
