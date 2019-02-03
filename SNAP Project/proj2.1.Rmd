@@ -1,7 +1,7 @@
 ---
-title: "proj2.1"
+title: "SNAP Project"
 author: "Yangyang Dai"
-date: "2/1/2019"
+#date: "2/1/2019"
 output:
   html_document: default
   pdf_document: default
@@ -74,6 +74,11 @@ part_18
 data<-part_18[c("state","sep18","region")]
 data
 ```
+\newline
+\newline
+\newline
+\newline
+\newline
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE,fig.align = "center",out.width = '90%',fig.width=6, fig.height=6,}
 data = data %>% arrange(region, as.numeric(as.character(sep18)))
@@ -205,7 +210,7 @@ pop <- read.delim("data.txt",header = TRUE, sep = ",")
 
 colnames(pop)[colnames(pop)=="State"] <- "state_name"
 # part_18<-part_18[ ! part_18$state %in% c("Guam","Virgin Islands"), ]
-# pop<-pop[ ! pop$state %in% c("Rhode Island"), ]
+# pop<              -pop[ ! pop$state %in% c("Rhode Island"), ]
 # pop$part.18<-part_18$sep18
 # pop$part.per.capita<-as.numeric(pop$part.18)/as.numeric(pop$X2019.Population)
 
@@ -415,13 +420,13 @@ b <- ggplot(part_ben, aes(x = Year, y=Benefit.dollar.person.))
 
 b + geom_point(aes(color = um), size = 3) +
   # scale_x_continuous(label=c(1990,1995,2000,2005,2010,2015))+
-  scale_color_gradientn(colors = c("#00AFBB", "#E7B800", "#FC4E07"))+labs(y = "Benefits per person ($)",x = "Year",colour = "Unemployment Rate",title="SNAP benefit dollar per person and Unemployment Rate 1989-2018", subtitle="Overall the SNAP participation and benefits increased over the last two decades",caption="Source:Bureau of Labor Statistics \n https://data.bls.gov/timeseries/LNS14000000")+theme(plot.caption = element_text(hjust = 0),plot.title=element_text(size=20, 
+  scale_color_gradientn(colors = c("#00AFBB", "#E7B800", "#FC4E07"))+labs(y = "Benefits per person ($)",x = "Year",colour = "Unemployment Rate",title="SNAP benefit dollar per person and Unemployment Rate 1989-2018", subtitle="Overall the SNAP participation and benefits increased over the last two decades",caption="Source:Bureau of Labor Statistics \n https://data.bls.gov/timeseries/LNS14000000")+theme(plot.caption = element_text(hjust = 0),plot.title=element_text(size=14, 
                                     face="bold", 
                                     family="American Typewriter",
                                     color="black",
                                     hjust=0.5,
                                     lineheight=1.2),  # title
-            plot.subtitle=element_text(size=15, 
+            plot.subtitle=element_text(size=11, 
                                        family="American Typewriter",
                                        face="bold",
                                        hjust=0.5))
@@ -431,21 +436,29 @@ b + geom_point(aes(color = um), size = 3) +
 
 From 1989 to 2018, the benefits per person increased dramatically. From around 50 dollars to above 250 dollars, the dollar benefitfive is currenly five times more than from the beginning. The color scale shows the range of unemployment rate over the years. The unemployment rate fluctuates from 1989 to 2008, and increased dramatically around 2008 to 2014, which is the financial crisis period. The benefit per person decreased a little, but after the crisis, the benefit jumped very high till around 250 dollars per person and came back to around 125 in the most recent year.  
 
-```{r include=FALSE}
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.align = "center",out.width = '80%'}
 # Create data: note in High school for several students
-data = as.data.frame(matrix(
+data = matrix(
   c(6.4, 6.3,6.2,22, 23,24,81,78,74),
   nrow=3
-))
+)
 colnames(data)=c("WIC" ,"School Lunch" , "SNAP")
 rownames(data)=c("2016","2017","2018")
-data
+# barplot(data, col=colors()[c(23,89,12)] , border="white", space=0.001, font.axis=2, xlab="group")
+barplot(data, col=colors()[c(23,89,12)] , border="white", font.axis=2, beside=T, legend=rownames(data), xlab="group", font.lab=2)
+
+
+# data
 # To use the fmsb package, I have to add 2 lines to the dataframe: the max and min of each topic to show on the plot!
-data=rbind(rep(200,10) , rep(0,10) , data)
+# data=rbind(rep(200,10) , rep(0,10) , data)
 
 #==================
 # Plot 1: Default radar chart proposed by the library:
-radarchart(data)
+# radarchart(data)
+# Get the stacked barplot
+
+
+# Grouped barplot
 
 #==================
 # Plot 2: Same plot with custom features
@@ -475,6 +488,40 @@ radarchart(data)
 #     )
 # legend(x=0.7, y=1, legend = rownames(data[-c(1,2),]), bty = "n", pch=20 , col=colors_in , text.col = "grey", cex=1.2, pt.cex=3)
 ```
+
+
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.align = "center",out.width = '80%'}
+# Create data: note in High school for several students
+data = matrix(
+  c(7.7,7.3,7.2,30.4,30.6,30.6,44.2,42.8,42.2),
+  nrow=3
+)
+colnames(data)=c("WIC" ,"School Lunch" , "SNAP")
+rownames(data)=c("2016","2017","2018")
+# barplot(data, col=colors()[c(23,89,12)] , border="white", space=0.001, font.axis=2, xlab="group")
+barplot(data, col=colors()[c(23,89,12)] , border="white", font.axis=2, beside=T, legend=rownames(data), xlab="group", font.lab=2)
+```
+\newline
+\newline
+\newline
+\newline
+\newline
+FOOD AND NUTRITION SERVICE
+The Budget provides funding for the major nutrition assistance programs, accounting for projected
+program participation and food cost inflation. It seeks to prevent and reduce food insecurity and
+to improve the nutritional status of recipients.
+
+To support FNS’ work to identify and eliminate fraud, waste, and abuse, the Budget provides
+resources for program integrity efforts in all of the major programs, including SNAP, WIC, and
+the Child Nutrition Programs.
+
+
+\newline
+\newline
+\newline
+\newline
+\newline
 
 
 
