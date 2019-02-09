@@ -1,0 +1,76 @@
+---
+title: "SNAP Project"
+author: "Yangyang Dai"
+#date: "2/1/2019"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+library("ggplot2")
+theme_set(theme_bw())
+library("sf")
+library(RColorBrewer)
+library(fmsb)
+library(plotly)
+library(MASS)
+library(mosaic)
+library(knitr)
+library(tidyverse)
+library(ggformula)
+library(gridExtra)
+library(broom)
+library(binom)
+library(scales)
+require(xlsx)
+library(gtable)
+library(grid)
+require("devtools")
+library("tidyverse")
+library("viridis")
+library("urbnmapr")
+library(data.table)
+library(scales)
+library(lubridate)
+```
+```{r}
+county <- st_read("cb_2017_us_county_500k/cb_2017_us_county_500k.shp",stringsAsFactors=FALSE)
+glimpse(county)
+fipscounty(county = "CA, Monterey")
+county_ll <- st_transform(county, "+proj=longlat +ellps=WGS84 +datum=WGS84")
+# st_coordinates(county_ll)
+retailer <- read_csv("store_locations_2019_01_29.csv")
+retailer$County<-fipscounty(retailer$County)
+retailer$County<-paste(retailer$County, "COUNTY", sep=" ")
+
+my_data <- read.delim("2015Jan_ggplot2Koffman.txt",sep=',',header = FALSE)
+
+head(my_data)
+glimpse(retailer)
+merged_data <- left_join(ward_shp, wards, by = c("WARD"="Ward"))
+glimpse(merged_data)
+class(merged_data)
+# head(county)
+```
+
+```{r}
+coords <- st_coordinates(county_ll)
+coords<-data.frame(coords)
+ggplot() + geom_polygon(data = coords, aes(x = X, y = Y), colour = "black", fill = NA)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

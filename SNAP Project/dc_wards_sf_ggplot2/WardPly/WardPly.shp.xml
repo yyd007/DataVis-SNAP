@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+	<idinfo>
+		<citation>
+			<citeinfo>
+				<origin>Office of Planning</origin>
+				<pubdate>20120130</pubdate>
+				<title>Wards</title>
+				<geoform Sync="TRUE">vector digital data</geoform>
+				<onlink Sync="TRUE"></onlink>
+				<ftname Sync="TRUE">DCGIS.WardPly</ftname></citeinfo>
+		</citation>
+		<descript>
+			<abstract>
+2012 Wards. The dataset contains polygons representing boundaries of District of Columbia 2012 election wards, created as part of the DC Geographic Information System (DC GIS) for the D.C. Office of the Chief Technology Officer (OCTO) and participating D.C. government agencies. The DC Office of Planning provided the boundaries to the DC GIS program.
+
+All DC GIS data is stored and exported in Maryland State Plane coordinates NAD 83 meters.
+
+METADATA CONTENT IS IN PROCESS OF VALIDATION AND SUBJECT TO CHANGE
+</abstract>
+			<purpose>This data is used for the planning and management of Washington, D.C. by local government agencies.</purpose>
+			<langdata Sync="TRUE">en</langdata></descript>
+		<timeperd>
+			<timeinfo>
+				<sngdate>
+					<caldate>20120130</caldate>
+				</sngdate>
+			</timeinfo>
+			<current>publication date</current>
+		</timeperd>
+		<status>
+			<progress>In work</progress>
+			<update>As needed</update>
+		</status>
+		<spdom>
+			<bounding>
+				<westbc Sync="TRUE">-77.119896</westbc>
+				<eastbc Sync="TRUE">-76.909016</eastbc>
+				<northbc Sync="TRUE">38.995967</northbc>
+				<southbc Sync="TRUE">38.791582</southbc>
+			</bounding>
+			<lboundng><leftbc Sync="TRUE">389613.706500</leftbc><rightbc Sync="TRUE">407881.659500</rightbc><bottombc Sync="TRUE">124876.928000</bottombc><topbc Sync="TRUE">147558.549000</topbc></lboundng></spdom>
+		<keywords>
+			<theme>
+				<themekt>REQUIRED: Reference to a formally registered thesaurus or a similar authoritative source of theme keywords.</themekt>
+				<themekey>Wards</themekey>
+				<themekey>Politics</themekey>
+				<themekey>boundary</themekey>
+				<themekey>council</themekey>
+			</theme>
+			<place>
+				<placekey>Washington</placekey>
+				<placekey>Washington, DC</placekey>
+			</place>
+		</keywords>
+		<accconst>none</accconst>
+		<useconst>Acknowledgment of the DC Geographic Information Systems Program (DC GIS).  The District of Columbia Government makes no claims as to the completeness, accuracy or content of any data contained hereon, and makes no representation of any kind, including, but not limited to, the warranty of the accuracy or fitness for a  particular use, nor are any such warranties to be implied or inferred with respect to the information or data furnished herein.</useconst>
+		<ptcontac>
+			<cntinfo>
+				<cntperp>
+					<cntorg>DC Office of Planning</cntorg>
+				</cntperp>
+				<cntaddr>
+					<addrtype>mailing and physical address</addrtype>
+					<address>1100 4th Street, SW, Suite E650</address>
+					<city>Washington</city>
+					<state>DC</state>
+					<postal>20024</postal>
+					<country>USA</country>
+				</cntaddr>
+				<cntvoice>202 442 7600</cntvoice>
+				<hours>9am - 5pm</hours>
+			</cntinfo>
+		</ptcontac>
+		<datacred>Office of Planning</datacred>
+		<native Sync="TRUE">Microsoft Windows XP Version 5.1 (Build 2600) Service Pack 3; ESRI ArcCatalog 9.3.1.4000</native>
+		<natvform Sync="TRUE">SDE Feature Class</natvform></idinfo>
+	<dataqual>
+		<attracc>
+			<attraccr>Validated by source and/or responsible agency.</attraccr>
+		</attracc>
+		<logic>Validated by source and/or responsible agency.</logic>
+		<complete>Validated by source and/or responsible agency.</complete>
+		<posacc>
+			<horizpa>
+				<horizpar>Features have been topologically matched to the snapbase where the boundary matched features such as rivers, shoreline, and street centerlines.  OCTO took the Office of Planning digitized boundary in between parts that matched the snapbase.</horizpar>
+			</horizpa>
+			<vertacc>
+				<vertaccr>N/A</vertaccr>
+			</vertacc>
+		</posacc>
+		<lineage>
+			<srcinfo>
+				<srccite>
+					<citeinfo>
+						<origin>Council of the District of Columbia</origin>
+						<pubdate>2011</pubdate>
+						<title>WARD REDISTRICTING AMENDMENT ACT OF 2011</title>
+						<geoform>document</geoform>
+						<onlink>http://www.dccouncil.washington.dc.us/</onlink>
+					</citeinfo>
+				</srccite>
+				<typesrc>paper</typesrc>
+				<srccitea>WARD REDISTRICTING AMENDMENT ACT OF 2011</srccitea>
+				<srccontr>location and attribution</srccontr>
+			</srcinfo>
+			<procstep>
+				<procdesc>
+The District Office of Planning updated the ward boundaries to reflect the revised legislation due to the 10 year redistricting effort.   OCTO then took those snapped boundaries and selected snapbase feature, such as street centerlines and shoreline, where the boundaries overlapped.  Two line files were formed, areas where the boundaries overlapped snapbase features and the original OLP boundary between the snapbase lines.  Staff then merged the two layers together, constructed polygons, and appended the basic 2002 attributes to the layer.
+
+Note that these boundaries do split certain Census Blocks.
+</procdesc>
+				<procdate>20110907</procdate>
+				<proccont>
+					<cntinfo>
+						<cntperp>
+							<cntper>GIS Data Coordinator</cntper>
+							<cntorg>Office of the Chief Technology Officer</cntorg>
+						</cntperp>
+						<cntfax>202-727-5660</cntfax>
+						<cntemail>dcgis@dc.gov</cntemail>
+						<hours>9am - 5pm</hours>
+					</cntinfo>
+				</proccont>
+			</procstep>
+			<procstep>
+				<procdesc>Metadata imported.</procdesc>
+				<srcused>C:\DOCUME~1\fieldm\LOCALS~1\Temp\xmlDF3.tmp</srcused>
+				<procdate>20110908</procdate>
+				<proctime>17560700</proctime>
+			</procstep>
+			<procstep>
+				<procdesc>Dataset copied.</procdesc>
+				<srcused>Server=dcgiscentral.in.dc.gov; Service=5151; User=dcgis_user; Version=SDE.DEFAULT</srcused>
+				<procdate>20111110</procdate>
+				<proctime>14200000</proctime>
+			</procstep>
+			<procstep><procdesc Sync="TRUE">Metadata imported.</procdesc><srcused Sync="TRUE">C:\DOCUME~1\fieldm\LOCALS~1\Temp\xmlA09.tmp</srcused><procdate Sync="TRUE">20120201</procdate><proctime Sync="TRUE">16495600</proctime></procstep><procstep><procdesc Sync="TRUE">Dataset copied.</procdesc><srcused Sync="TRUE">Server=10.1.11.144; Service=5151; User=dcgis; Version=SDE.DEFAULT</srcused><procdate Sync="TRUE">20120910</procdate><proctime Sync="TRUE">12323400</proctime></procstep></lineage>
+	</dataqual>
+	<spdoinfo>
+		<direct Sync="TRUE">Vector</direct>
+		<ptvctinf>
+			<sdtsterm Name="DCGIS.WardPly">
+				<sdtstype Sync="TRUE">G-polygon</sdtstype>
+				<ptvctcnt Sync="TRUE">0</ptvctcnt>
+			</sdtsterm>
+			<esriterm Name="DCGIS.WardPly"><efeatyp Sync="TRUE">Simple</efeatyp><efeageom Sync="TRUE">Polygon</efeageom><esritopo Sync="TRUE">FALSE</esritopo><efeacnt Sync="TRUE">0</efeacnt><spindex Sync="TRUE">TRUE</spindex><linrefer Sync="TRUE">FALSE</linrefer></esriterm></ptvctinf>
+	</spdoinfo>
+	<spref>
+		<horizsys>
+			<planar>
+				<planci>
+					<plance Sync="TRUE">coordinate pair</plance>
+					<coordrep>
+						<absres Sync="TRUE">0.000063</absres>
+						<ordres Sync="TRUE">0.000063</ordres>
+					</coordrep>
+					<plandu Sync="TRUE">meters</plandu>
+				</planci>
+				<gridsys><gridsysn Sync="TRUE">State Plane Coordinate System 1983</gridsysn><spcs><spcszone Sync="TRUE">1900</spcszone><lambertc><stdparll Sync="TRUE">38.300000</stdparll><stdparll Sync="TRUE">39.450000</stdparll><longcm Sync="TRUE">-77.000000</longcm><latprjo Sync="TRUE">37.666667</latprjo><feast Sync="TRUE">400000.000000</feast><fnorth Sync="TRUE">0.000000</fnorth></lambertc></spcs></gridsys></planar>
+			<geodetic>
+				<horizdn Sync="TRUE">North American Datum of 1983</horizdn>
+				<ellips Sync="TRUE">Geodetic Reference System 80</ellips>
+				<semiaxis Sync="TRUE">6378137.000000</semiaxis>
+				<denflat Sync="TRUE">298.257222</denflat>
+			</geodetic>
+			<cordsysn><geogcsn Sync="TRUE">GCS_North_American_1983</geogcsn><projcsn Sync="TRUE">NAD_1983_StatePlane_Maryland_FIPS_1900</projcsn></cordsysn></horizsys>
+		<vertdef>
+			<altsys>
+				<altres Sync="TRUE">1.000000</altres>
+				<altenc Sync="TRUE">Explicit elevation coordinate included with horizontal coordinates</altenc>
+			</altsys>
+		</vertdef>
+	</spref>
+	<eainfo>
+		<detailed Name="DCGIS.WardPly">
+			<enttyp>
+				<enttypl Sync="TRUE">DCGIS.WardPly</enttypl>
+				<enttypt Sync="TRUE">Feature Class</enttypt><enttypc Sync="TRUE">0</enttypc></enttyp>
+			<attr>
+				<attrlabl>OBJECTID</attrlabl>
+				<attrdef>Internal feature number.</attrdef>
+				<attrdefs>ESRI</attrdefs>
+				<attrdomv>
+					<udom>Sequential unique whole numbers that are automatically generated.</udom>
+				</attrdomv>
+				<attalias Sync="TRUE">OBJECTID</attalias><attrtype Sync="TRUE">OID</attrtype><attwidth Sync="TRUE">4</attwidth><atprecis Sync="TRUE">10</atprecis><attscale Sync="TRUE">0</attscale></attr>
+			<attr>
+				<attrlabl>SHAPE</attrlabl>
+				<attrdef>Feature geometry.</attrdef>
+				<attrdefs>ESRI</attrdefs>
+				<attrdomv>
+					<udom>Coordinates defining the features.</udom>
+				</attrdomv>
+				<attalias Sync="TRUE">Shape</attalias><attrtype Sync="TRUE">Geometry</attrtype><attwidth Sync="TRUE">4</attwidth><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale></attr>
+			<attr><attrlabl Sync="TRUE">DCGIS.WardPly.FID</attrlabl><attalias Sync="TRUE">DCGIS.WardPly.FID</attalias><attrtype Sync="TRUE">Integer</attrtype><attwidth Sync="TRUE">4</attwidth><atprecis Sync="TRUE">10</atprecis><attscale Sync="TRUE">0</attscale></attr><attr>
+				<attrlabl>NAME</attrlabl>
+				<attrdef>Ward Name</attrdef>
+				<attalias Sync="TRUE">NAME</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">50</attwidth><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale></attr>
+			<attr>
+				<attrlabl>GIS_ID</attrlabl>
+				<attrdef>OCTO GIS sequential ID</attrdef>
+				<attalias Sync="TRUE">GIS_ID</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">15</attwidth><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale></attr>
+			<attr>
+				<attrlabl>WEB_URL</attrlabl>
+				<attrdef>Ward Council Member web link</attrdef>
+				<attalias Sync="TRUE">WEB_URL</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">100</attwidth><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale></attr>
+			<attr>
+				<attrlabl>Ward</attrlabl>
+				<attrdef>Ward Value</attrdef>
+				<attalias Sync="TRUE">WARD</attalias><attrtype Sync="TRUE">SmallInteger</attrtype><attwidth Sync="TRUE">2</attwidth><atprecis Sync="TRUE">5</atprecis><attscale Sync="TRUE">0</attscale></attr>
+			<attr>
+				<attrlabl>REP_NAME</attrlabl>
+				<attrdef>Council Representative Name</attrdef>
+				<attalias Sync="TRUE">REP_NAME</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">25</attwidth><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale></attr>
+			<attr>
+				<attrlabl>REP_PHONE</attrlabl>
+				<attrdef>Council Representative Phone Number</attrdef>
+				<attalias Sync="TRUE">REP_PHONE</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">50</attwidth><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale></attr>
+			<attr>
+				<attrlabl>REP_EMAIL</attrlabl>
+				<attrdef>Council Representative Email</attrdef>
+				<attalias Sync="TRUE">REP_EMAIL</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">50</attwidth><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale></attr>
+			<attr><attrlabl Sync="TRUE">WARD_ID</attrlabl><attalias Sync="TRUE">WARD_ID</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">15</attwidth><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale></attr><attr><attrlabl Sync="TRUE">LABEL</attrlabl><attalias Sync="TRUE">LABEL</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">15</attwidth><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale></attr><attr><attrlabl Sync="TRUE">AREASQMI</attrlabl><attalias Sync="TRUE">AREASQMI</attalias><attrtype Sync="TRUE">Double</attrtype><attwidth Sync="TRUE">8</attwidth><atprecis Sync="TRUE">38</atprecis><attscale Sync="TRUE">8</attscale></attr><attr>
+				<attrlabl>REP_OFFICE</attrlabl>
+				<attrdef>Council Representative Office</attrdef>
+				<attalias Sync="TRUE">REP_OFFICE</attalias><attrtype Sync="TRUE">String</attrtype><attwidth Sync="TRUE">50</attwidth><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale></attr>
+			<attr><attrlabl Sync="TRUE">SE_ANNO_CAD_DATA</attrlabl><attalias Sync="TRUE">SE_ANNO_CAD_DATA</attalias><attrtype Sync="TRUE">Blob</attrtype><attwidth Sync="TRUE">0</attwidth><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale></attr><attr><attrlabl Sync="TRUE">SHAPE.AREA</attrlabl><attalias Sync="TRUE">SHAPE.AREA</attalias><attrtype Sync="TRUE">Double</attrtype><attwidth Sync="TRUE">0</attwidth><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale></attr><attr><attrlabl Sync="TRUE">SHAPE.LEN</attrlabl><attalias Sync="TRUE">SHAPE.LEN</attalias><attrtype Sync="TRUE">Double</attrtype><attwidth Sync="TRUE">0</attwidth><atprecis Sync="TRUE">0</atprecis><attscale Sync="TRUE">0</attscale></attr></detailed>
+	</eainfo>
+	<distinfo>
+		<distrib>
+			<cntinfo>
+				<cntperp>
+					<cntorg>District of Columbia Office of Planning</cntorg>
+				</cntperp>
+				<cntvoice>202 442 7600</cntvoice>
+			</cntinfo>
+		</distrib>
+		<resdesc>Downloadable Data</resdesc>
+		<distliab>Acknowledgment of the DC Geographic Information Systems Program (DC GIS).  The District of Columbia Government makes no claims as to the completeness, accuracy or content of any data contained hereon, and makes no representation of any kind, including, but not limited to, the warranty of the accuracy or fitness for a  particular use, nor are any such warranties to be implied or inferred with respect to the information or data furnished herein.</distliab>
+		<stdorder>
+			<digform>
+				<digtinfo>
+					<transize>0.000</transize>
+				</digtinfo>
+			</digform>
+			<ordering>Most DC GIS datasets can be downloaded from "http://dcgis.dc.gov" on the data center page.  Orders can also be made by contacting OCTO GIS at "dcgis@dc.gov", especially for datasets not available for download.</ordering>
+		</stdorder>
+	</distinfo>
+	<metainfo>
+		<metd Sync="TRUE">20120525</metd>
+		<metrd>20110908</metrd>
+		<metc>
+			<cntinfo>
+				<cntorgp>
+					<cntorg>Office of the Chief Tecnhology Officer</cntorg>
+					<cntper>GIS Data Coordinator</cntper>
+				</cntorgp>
+				<cntaddr>
+					<addrtype>mailing and physical address</addrtype>
+					<address>441 4th St NW, Suite 930 South</address>
+					<city>Washington</city>
+					<state>DC</state>
+					<postal>20001</postal>
+					<country>USA</country>
+				</cntaddr>
+				<cntvoice>REQUIRED: The telephone number by which individuals can speak to the organization or individual.</cntvoice>
+				<cntfax>202-727-5660</cntfax>
+				<cntemail>dcgis@dc.gov</cntemail>
+			</cntinfo>
+		</metc>
+		<metstdn Sync="TRUE">FGDC Content Standards for Digital Geospatial Metadata</metstdn>
+		<metstdv Sync="TRUE">FGDC-STD-001-1998</metstdv>
+		<mettc Sync="TRUE">local time</mettc>
+		<metextns>
+			<onlink>http://www.esri.com/metadata/esriprof80.html</onlink>
+			<metprof>ESRI Metadata Profile</metprof>
+		</metextns>
+		<metextns>
+			<onlink>http://www.esri.com/metadata/esriprof80.html</onlink>
+			<metprof>ESRI Metadata Profile</metprof>
+		</metextns>
+		<langmeta Sync="TRUE">en</langmeta><metextns><onlink Sync="TRUE">http://www.esri.com/metadata/esriprof80.html</onlink><metprof Sync="TRUE">ESRI Metadata Profile</metprof></metextns></metainfo>
+	<Esri><CreaDate>20120910</CreaDate><CreaTime>12323400</CreaTime><SyncOnce>FALSE</SyncOnce><SyncDate>20120525</SyncDate><SyncTime>20514500</SyncTime><ModDate>20120525</ModDate><ModTime>20514500</ModTime><DataProperties><lineage><Process ToolSource="C:\Program Files\ArcGIS\ArcToolbox\Toolboxes\Conversion Tools.tbx\FeatureClassToFeatureClass" Date="20120518" Time="131443">FeatureClassToFeatureClass "Database Connections\DCGISCentral_RO.sde\DCGIS.Political\DCGIS.WardPly" V:\Data_Load.gdb WardPly # "WARD 'WARD' true true false 2 Short 0 5 ,First,#,Database Connections\DCGISCentral_RO.sde\DCGIS.Political\DCGIS.WardPly,WARD,-1,-1;FID 'FID' true true false 4 Long 0 10 ,First,#,Database Connections\DCGISCentral_RO.sde\DCGIS.Political\DCGIS.WardPly,DCGIS.WardPly.FID,-1,-1;NAME 'NAME' true true false 50 Text 0 0 ,First,#,Database Connections\DCGISCentral_RO.sde\DCGIS.Political\DCGIS.WardPly,NAME,-1,-1;REP_NAME 'REP_NAME' true true false 25 Text 0 0 ,First,#,Database Connections\DCGISCentral_RO.sde\DCGIS.Political\DCGIS.WardPly,REP_NAME,-1,-1;GIS_ID 'GIS_ID' true true false 15 Text 0 0 ,First,#,Database Connections\DCGISCentral_RO.sde\DCGIS.Political\DCGIS.WardPly,GIS_ID,-1,-1;WEB_URL 'WEB_URL' true true false 100 Text 0 0 ,First,#,Database Connections\DCGISCentral_RO.sde\DCGIS.Political\DCGIS.WardPly,WEB_URL,-1,-1;REP_PHONE 'REP_PHONE' true true false 50 Text 0 0 ,First,#,Database Connections\DCGISCentral_RO.sde\DCGIS.Political\DCGIS.WardPly,REP_PHONE,-1,-1;REP_EMAIL 'REP_EMAIL' true true false 50 Text 0 0 ,First,#,Database Connections\DCGISCentral_RO.sde\DCGIS.Political\DCGIS.WardPly,REP_EMAIL,-1,-1;REP_OFFICE 'REP_OFFICE' true true false 50 Text 0 0 ,First,#,Database Connections\DCGISCentral_RO.sde\DCGIS.Political\DCGIS.WardPly,REP_OFFICE,-1,-1;WARD_ID 'WARD_ID' true true false 15 Text 0 0 ,First,#,Database Connections\DCGISCentral_RO.sde\DCGIS.Political\DCGIS.WardPly,WARD_ID,-1,-1;LABEL 'LABEL' true true false 15 Text 0 0 ,First,#,Database Connections\DCGISCentral_RO.sde\DCGIS.Political\DCGIS.WardPly,LABEL,-1,-1;AREASQMI 'AREASQMI' true true false 8 Double 8 38 ,First,#,Database Connections\DCGISCentral_RO.sde\DCGIS.Political\DCGIS.WardPly,AREASQMI,-1,-1;SHAPE_AREA 'SHAPE_AREA' false false true 0 Double 0 0 ,First,#,Database Connections\DCGISCentral_RO.sde\DCGIS.Political\DCGIS.WardPly,SHAPE.AREA,-1,-1;SHAPE_LEN 'SHAPE_LEN' false false true 0 Double 0 0 ,First,#,Database Connections\DCGISCentral_RO.sde\DCGIS.Political\DCGIS.WardPly,SHAPE.LEN,-1,-1" # V:\Data_Load.gdb\WardPly</Process><Process ToolSource="C:\Program Files\ArcGIS\ArcToolbox\Toolboxes\Data Management Tools.tbx\CopyFeatures" Date="20120525" Time="205147">CopyFeatures V:\Data_Load.gdb\WardPly "Database Connections\DCGISCentral_Vector.sde\DCGIS.Political\DCGIS.WardPly" SDO_GEOMETRY 0 0 0</Process></lineage></DataProperties><MetaID>{755BB6F3-95F2-40C1-8EBA-D7BC845EC5B3}</MetaID></Esri><dataIdInfo><envirDesc Sync="TRUE">Microsoft Windows XP Version 5.1 (Build 2600) Service Pack 3; ESRI ArcCatalog 9.3.1.4000</envirDesc><dataLang><languageCode Sync="TRUE" value="en"></languageCode></dataLang><idCitation><resTitle Sync="TRUE">DCGIS.WardPly</resTitle><presForm><PresFormCd Sync="TRUE" value="005"></PresFormCd></presForm></idCitation><spatRpType><SpatRepTypCd Sync="TRUE" value="001"></SpatRepTypCd></spatRpType><dataExt><geoEle><GeoBndBox esriExtentType="native"><westBL Sync="TRUE">389613.7065</westBL><eastBL Sync="TRUE">407881.6595</eastBL><northBL Sync="TRUE">147558.549</northBL><southBL Sync="TRUE">124876.928</southBL><exTypeCode Sync="TRUE">1</exTypeCode></GeoBndBox></geoEle></dataExt><geoBox esriExtentType="decdegrees"><westBL Sync="TRUE">-77.119896</westBL><eastBL Sync="TRUE">-76.909016</eastBL><northBL Sync="TRUE">38.995967</northBL><southBL Sync="TRUE">38.791582</southBL><exTypeCode Sync="TRUE">1</exTypeCode></geoBox></dataIdInfo><mdLang><languageCode Sync="TRUE" value="en"></languageCode></mdLang><mdStanName Sync="TRUE">ISO 19115 Geographic Information - Metadata</mdStanName><mdStanVer Sync="TRUE">DIS_ESRI1.0</mdStanVer><mdChar><CharSetCd Sync="TRUE" value="004"></CharSetCd></mdChar><mdHrLv><ScopeCd Sync="TRUE" value="005"></ScopeCd></mdHrLv><mdHrLvName Sync="TRUE">dataset</mdHrLvName><distInfo><distributor><distorTran><onLineSrc><orDesc Sync="TRUE">002</orDesc><linkage Sync="TRUE">file://</linkage><protocol Sync="TRUE">Local Area Network</protocol></onLineSrc></distorTran><distorFormat><formatName Sync="TRUE">SDE Feature Class</formatName></distorFormat></distributor></distInfo><refSysInfo><RefSystem><refSysID><identCode Sync="TRUE">NAD_1983_StatePlane_Maryland_FIPS_1900</identCode></refSysID></RefSystem></refSysInfo><spatRepInfo><VectSpatRep><topLvl><TopoLevCd Sync="TRUE" value="001"></TopoLevCd></topLvl><geometObjs Name="DCGIS.WardPly"><geoObjTyp><GeoObjTypCd Sync="TRUE" value="001"></GeoObjTypCd></geoObjTyp><geoObjCnt Sync="TRUE">0</geoObjCnt></geometObjs></VectSpatRep></spatRepInfo><mdDateSt Sync="TRUE">20120525</mdDateSt></metadata>

@@ -8,6 +8,9 @@ output:
 ---
 
 ```{r setup, include=FALSE}
+library("ggplot2")
+theme_set(theme_bw())
+library("sf")
 library(RColorBrewer)
 library(fmsb)
 library(plotly)
@@ -21,7 +24,6 @@ library(broom)
 library(binom)
 library(scales)
 require(xlsx)
-library(ggplot2)
 library(gtable)
 library(grid)
 require("devtools")
@@ -31,7 +33,6 @@ library("urbnmapr")
 library(data.table)
 library(scales)
 library(lubridate)
-library(ggplot2)
 devtools::install_github("UrbanInstitute/urbnmapr")
 
 ```
@@ -611,7 +612,10 @@ We can see that the orange area leans towards good side more than the blue area,
 
 
 
+```{r}
 
+
+```
 
 
 
