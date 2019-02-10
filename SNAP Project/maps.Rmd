@@ -33,31 +33,51 @@ library("urbnmapr")
 library(data.table)
 library(scales)
 library(lubridate)
+library(dplyr)
 ```
-```{r}
+```{r include=FALSE}
 county <- st_read("cb_2017_us_county_500k/cb_2017_us_county_500k.shp",stringsAsFactors=FALSE)
-glimpse(county)
-fipscounty(county = "CA, Monterey")
+# glimpse(county)
 county_ll <- st_transform(county, "+proj=longlat +ellps=WGS84 +datum=WGS84")
 # st_coordinates(county_ll)
 retailer <- read_csv("store_locations_2019_01_29.csv")
-retailer$County<-fipscounty(retailer$County)
 retailer$County<-paste(retailer$County, "COUNTY", sep=" ")
+# glimpse(retailer)
+dt <- read.delim("2015Jan_ggplot2Koffman.txt",sep=',',header = FALSE,colClasses = "character")
+dt <- mutate_all(dt, funs(toupper))
+colnames(dt)=c("state","statefp","countyfp","name","loc")
+# head(dt)
+merged_data <- left_join(county, dt, by = c("COUNTYFP"="countyfp"))
+merged_data <- left_join(merged_data, retailer, by = c("name"="County"))
 
-my_data <- read.delim("2015Jan_ggplot2Koffman.txt",sep=',',header = FALSE)
-
-head(my_data)
-glimpse(retailer)
-merged_data <- left_join(ward_shp, wards, by = c("WARD"="Ward"))
 glimpse(merged_data)
-class(merged_data)
+
+# class(merged_data)
 # head(county)
+
+coords <- st_coordinates(merged_data)
+coords<-data.frame(coords)
+
+ggplot() + geom_polygon(data = merged_data, aes(x = X, y = Y), colour = "black", fill = NA)
 ```
 
 ```{r}
-coords <- st_coordinates(county_ll)
-coords<-data.frame(coords)
-ggplot() + geom_polygon(data = coords, aes(x = X, y = Y), colour = "black", fill = NA)
+
+ggplot(merged_data, aes(x = X, y = Y)) +
+    geom_polygon(colour = "black", size = 1, fill = "white") +
+    geom_point(aes(x = Longitude, y = Latitude), size = 0.2, shape = 21, colour = "black")
+
+
+state <- st_read("cb_2017_us_state_500k/cb_2017_us_state_500k.shp",stringsAsFactors=FALSE)
+
+ggplot() + geom_sf(data = merged_data) 
+
+# p + geom_point(data=d, aes(x=lon, y=lat),size=5)
+# 
+# coords <- st_coordinates(county_ll)
+# coords<-data.frame(coords)
+# ggplot() + geom_polygon(data = coords, aes(x = X, y = Y), colour = "black", fill = NA)
+
 ```
 
 
