@@ -123,31 +123,42 @@ ggplot(data = county) +
     geom_sf(fill="#4b78af") +
     geom_point(data = retailer, aes(x = Longitude, y = Latitude), size = 0.00001, 
         shape = 23, fill = "white") +
-      coord_sf(xlim = c(-130, -65), ylim = c(20, 55), expand = FALSE) +
-  labs(title="Retailer Stores Participated in SNAP", subtitle="Retailer Stores are heavily distributed in Midwest and East", caption="Source:USDA Food Nutrition Services")+
+      coord_sf(xlim = c(-130, -65), ylim = c(20, 55), expand = FALSE) + labs(title="Retailer Stores Participated in SNAP", subtitle="Retailer Stores are heavily distributed in Midwest, South and East", caption="Source:USDA Food Nutrition Services")+
+  
+  # theme( axis.title.x=element_blank(),
+ # axis.text.x=element_blank(),
+ # axis.ticks.x=element_blank(),
+ # axis.title.y=element_blank(),
+ # axis.text.y=element_blank(),
+ # axis.ticks.y=element_blank(),
+ # panel.background=element_blank(),
+ # panel.border=element_blank(),
+ # panel.grid.minor=element_blank(),
+ # plot.background=element_blank())
+
+
   theme(plot.caption = element_text(hjust = 0),
         legend.text = element_text(size = 8),
         legend.title=element_text(size=6,face="bold"),
-        plot.title=element_text(size=17, 
-                                    face="bold", 
-                                    family="American Typewriter",
+        plot.title=element_text(size=17,
+                                    face="bold",
+                                    #family="American Typewriter",
                                     color="black",
                                     hjust=0.5,
                                     lineheight=1.2),  # title
-            plot.subtitle=element_text(size=12, 
-                                       family="American Typewriter",
+            plot.subtitle=element_text(size=12,
+                                       #family="American Typewriter",
                                        hjust=0.5),
- axis.title.x=element_blank(), 
- axis.text.x=element_blank(),
- axis.ticks.x=element_blank(),
- axis.title.y=element_blank(), 
- axis.text.y=element_blank(),
- axis.ticks.y=element_blank(),
- panel.background=element_blank(),
- panel.border=element_blank(),
- panel.grid.minor=element_blank(),
- plot.background=element_blank(),
- legend.position = c(.95, .5))
+axis.title.x=element_blank(),
+axis.text.x=element_blank(),
+axis.ticks.x=element_blank(),
+axis.title.y=element_blank(),
+axis.text.y=element_blank(),
+axis.ticks.y=element_blank(),
+panel.background=element_blank(),
+panel.border=element_blank(),
+panel.grid.minor=element_blank(),
+plot.background=element_blank())
 
 
 # + 
@@ -163,6 +174,32 @@ ggplot(data = county) +
 
 
 ```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

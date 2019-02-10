@@ -1,0 +1,187 @@
+---
+title: "SNAP Portfolio"
+author: "Yangyang Dai"
+date: "2/10/2019"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+library("ggplot2")
+theme_set(theme_bw())
+library("sf")
+library(RColorBrewer)
+library(fmsb)
+library(plotly)
+library(MASS)
+library(mosaic)
+library(knitr)
+library(tidyverse)
+library(ggformula)
+library(gridExtra)
+library(broom)
+library(binom)
+library(scales)
+require(xlsx)
+library(gtable)
+library(grid)
+require("devtools")
+library("tidyverse")
+library("viridis")
+library("urbnmapr")
+library(data.table)
+library(scales)
+library(lubridate)
+devtools::install_github("UrbanInstitute/urbnmapr")
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+# SNAP participation state level grouped by regions
+part_18 <-read.xlsx("snap_part_2018.xls",header=F,skip=6,sheetIndex = 1)
+part_18<-part_18[-c(9,48,49),][7:58,]
+colnames(part_18) <- c("state","sep17","aug18","sep18","sep18_vs_aug18","sep18_vs_sep17")
+```
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+r1="Northeast"
+r2="Midwest"
+r3="South"
+r4="West"
+
+s1<-c("Connecticut", "Maine", "Massachusetts", "New Hampshire", "Rhode Island", "Vermont", "New Jersey", "New York","Pennsylvania")
+s2<-c("Illinois", "Indiana", "Michigan", "Ohio", "Wisconsin", "Iowa", "Kansas", "Minnesota", "Missouri", "Nebraska", "North Dakota", "South Dakota")
+s3<-c("Delaware", "Florida", "Georgia", "Maryland", "North Carolina", "South Carolina", "Virginia", "District of Columbia", "Alabama", "Kentucky", "Mississippi", "Tennessee", "Arkansas", "Louisiana", "Oklahoma", "Texas")
+s4<-c("Arizona", "Colorado", "Idaho", "Montana", "Nevada", "New Mexico", "Utah", "Wyoming","Alaska", "California", "Hawaii", "Oregon", "Washington")
+
+
+for (row in 1:nrow(part_18)) {
+  state <- part_18[row, "state"]
+  if (state %in% s1) {
+  region = r1
+}else if(state %in% s2){
+  region = r2
+}else if(state %in% s3){
+  region = r3
+}else if(state %in% s4) {
+  region = r4
+}
+  part_18$region[row] <- region}
+
+```
+
+```{r include=FALSE}
+part_18
+data<-part_18[c("state","sep18","region")]
+```
+
+\newline
+\newline
+\newline
+\newline
+\newline
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.align = "center",out.width = '90%',fig.width=6, fig.height=6,}
+data = data %>% arrange(region, as.numeric(as.character(sep18)))
+
+# Set a number of 'empty bar' to add at the end of each group
+empty_bar=3
+to_add = data.frame( matrix(NA, empty_bar*nlevels(data$region), ncol(data)) )
+colnames(to_add) = colnames(data)
+to_add$group=rep(levels(data$region), each=empty_bar)
+data=rbind(data, to_add)
+data=data %>% arrange(region)
+data$id=seq(1, nrow(data))
+
+
+# Get the name and the y position of each label
+label_data=data
+number_of_bar=nrow(label_data)
+angle= 90 - 360 * (label_data$id-0.5) /number_of_bar     # I substract 0.5 because the letter must have the angle of the center of the bars. Not extreme right(1) or extreme left (0)
+label_data$hjust<-ifelse( angle < -90, 1, 0)
+label_data$angle<-ifelse(angle < -90, angle+180, angle)
+ 
+# prepare a data frame for base lines
+base_data=data %>% 
+  group_by(region) %>% 
+  summarize(start=min(id), end=max(id) - empty_bar) %>% 
+  rowwise() %>% 
+  mutate(title=mean(c(start, end)))
+
+
+# prepare a data frame for grid (scales)
+grid_data = base_data
+grid_data$end = grid_data$end[ c( nrow(grid_data), 1:nrow(grid_data)-1)] + 1
+grid_data$start = grid_data$start - 1
+grid_data=grid_data[-1,]
+
+
+# Make the plot
+p = ggplot(data, aes(x=as.factor(id), y=as.numeric(as.character(sep18)), fill=region))+ scale_fill_brewer(palette = "Blues")+       # Note that id is a factor. If x is numeric, there is some space between the first bar
+
+  geom_bar(aes(x=as.factor(id), y=as.numeric(as.character(sep18)), fill=region), stat="identity", alpha=0.5) +
+
+  # Add a val=100/75/50/25 lines. I do it at the beginning to make sur barplots are OVER it.
+  geom_segment(data=grid_data, aes(x = end, y = 4000000, xend = start, yend = 4000000), colour = "grey", alpha=1, size=0.1 , inherit.aes = FALSE ) +
+  geom_segment(data=grid_data, aes(x = end, y = 3000000, xend = start, yend = 3000000), colour = "grey", alpha=1, size=0.1 , inherit.aes = FALSE ) +
+  geom_segment(data=grid_data, aes(x = end, y = 2000000, xend = start, yend = 2000000), colour = "grey", alpha=1, size=0.1 , inherit.aes = FALSE ) +
+  geom_segment(data=grid_data, aes(x = end, y = 1000000, xend = start, yend = 1000000), colour = "grey", alpha=1, size=0.1 , inherit.aes = FALSE ) +
+
+  # Add text showing the value of each 100/75/50/25 lines
+  annotate("text", x = rep(max(data$id),4), y = c(1000000, 2000000, 3000000, 4000000), label = c("1m", "2m", "3m", "4m") , color="grey", size=3 , angle=0, fontface="bold", hjust=5) +
+
+  geom_bar(aes(x=as.factor(id), y=as.numeric(as.character(sep18)), fill=region), stat="identity", alpha=0.5) +
+  ylim(-1500000,4000000) +
+theme_minimal()+
+theme(plot.caption = element_text(hjust = 0,size=6),
+  legend.position = "none",
+  axis.text = element_blank(),
+  axis.title = element_blank(),
+  panel.grid = element_blank(),
+  # plot.title = element_text(),
+  plot.title=element_text(size=17, 
+                                    face="bold", 
+                                    color="black",
+                                    hjust=0.5,
+                                    lineheight=1.2),  # title
+            plot.subtitle=element_text(size=10, 
+                                       hjust=0.5)
+)+
+  coord_polar()+
+  geom_text(data=label_data, aes(x=id, y=as.numeric(as.character(sep18))+100000, label=state, hjust=hjust), color="black", fontface="bold",alpha=0.6, size=2, angle= label_data$angle, inherit.aes = FALSE ) +
+
+  # Add base line information
+  geom_segment(data=base_data, aes(x = start, y =-100000, xend = end, yend = -100000), colour = "black", alpha=0.8, size=0.6, inherit.aes = FALSE )  +
+  geom_text(data=base_data, aes(x = title, y = -180000, label=region), hjust=c(0.9,1,0.35,0), colour = "black", alpha=0.8, size=2, fontface="bold", inherit.aes = FALSE)+
+  labs(title="US SNAP Participation by State in 2018", subtitle="SNAP participation population(number) has huge range across states in different regions", caption = "Source: USDA Food Nutrition Services\nhttps://www.fns.usda.gov/pd/supplemental-nutrition-assistance-program-snap")
+
+p
+
+```
+
+
+
+```{r echo=FALSE, message=FALSE,warning=FALSE,fig.align = "center",out.width = '90%'}
+# retailer store location county level
+
+county <- st_read("cb_2017_us_county_500k/cb_2017_us_county_500k.shp")
+retailer <- read_csv("store_locations_2019_01_29.csv")
+
+theme_set(theme_bw())
+library("sf")
+
+ggplot(data = county) +
+    geom_sf(fill="#4b78af") +
+    geom_point(data = retailer, aes(x = Longitude, y = Latitude), size = 0.00001, 
+        shape = 23, fill = "white") +
+      coord_sf(xlim = c(-130, -65), ylim = c(20, 55), expand = FALSE) + labs(title="Retailer Stores Participated in SNAP", subtitle="Retailer Stores are heavily distributed in Midwest, South and East", caption="Source:USDA Food Nutrition Services")+ theme( axis.title.x=element_blank(),
+ axis.text.x=element_blank(),
+ axis.ticks.x=element_blank(),
+ axis.title.y=element_blank(),
+ axis.text.y=element_blank(),
+ axis.ticks.y=element_blank(),
+ panel.background=element_blank(),
+ panel.border=element_blank(),
+ panel.grid.minor=element_blank(),
+ plot.background=element_blank())
+```
+

@@ -34,7 +34,7 @@ library(data.table)
 library(scales)
 library(lubridate)
 devtools::install_github("UrbanInstitute/urbnmapr")
-
+library(statebins)
 ```
 
 ```{r echo=FALSE, message=FALSE, warning=FALSE}
@@ -120,7 +120,7 @@ grid_data=grid_data[-1,]
 
 
 # Make the plot
-p = ggplot(data, aes(x=as.factor(id), y=as.numeric(as.character(sep18)), fill=region))+ scale_fill_brewer(palette="Dark2")+       # Note that id is a factor. If x is numeric, there is some space between the first bar
+p = ggplot(data, aes(x=as.factor(id), y=as.numeric(as.character(sep18)), fill=region))+ scale_fill_brewer(palette="Blues")+       # Note that id is a factor. If x is numeric, there is some space between the first bar
 
   geom_bar(aes(x=as.factor(id), y=as.numeric(as.character(sep18)), fill=region), stat="identity", alpha=0.5) +
 
@@ -301,6 +301,128 @@ Drawing a US Food Tax map across states and comparing it with the previous parti
 \newline
 \newline
 
+```{r include=FALSE}
+county <- st_read("cb_2017_us_county_500k/cb_2017_us_county_500k.shp")
+retailer <- read_csv("store_locations_2019_01_29.csv")
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.align = "center",out.width = '100%'}
+theme_set(theme_bw())
+library("sf")
+
+ggplot(data = county) +
+    geom_sf(fill="#4b78af") +
+    geom_point(data = retailer, aes(x = Longitude, y = Latitude), size = 0.00001, 
+        shape = 23, fill = "white") +
+      coord_sf(xlim = c(-130, -65), ylim = c(20, 55), expand = FALSE) + labs(title="Retailer Stores Participated in SNAP", subtitle="Retailer Stores are heavily distributed in Midwest, South and East", caption="Source:USDA Food Nutrition Services")+
+  theme(plot.caption = element_text(hjust = 0),
+        legend.text = element_text(size = 8),
+        legend.title=element_text(size=6,face="bold"),
+        plot.title=element_text(size=17,
+                                    face="bold",
+                                    family="American Typewriter",
+                                    color="black",
+                                    hjust=0.5,
+                                    lineheight=1.2),  # title
+            plot.subtitle=element_text(size=12,
+                                       family="American Typewriter",
+                                       hjust=0.5),
+axis.title.x=element_blank(),
+axis.text.x=element_blank(),
+axis.ticks.x=element_blank(),
+axis.title.y=element_blank(),
+axis.text.y=element_blank(),
+axis.ticks.y=element_blank(),
+panel.background=element_blank(),
+panel.border=element_blank(),
+panel.grid.minor=element_blank(),
+plot.background=element_blank())
+
+```
+
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.align = "center",out.width = '100%'}
+# head(retailer)
+cnt <- retailer %>% group_by(State) %>% count(State)
+colnames(cnt)<-c("state","store_count")
+statebins_continuous(cnt, value_col="store_count",brewer_pal="Blues", font_size = 3,
+                     legend_title="Store counts")+
+labs(title="SNAP Retailer Store Counts by State", caption="Source:USDA Food Nutrition Services
+")+
+  theme(plot.caption = element_text(hjust = 0),panel.grid.major = element_line(colour = 'transparent'),
+         plot.title=element_text(size=17, 
+                                    face="bold", 
+                                    family="American Typewriter",
+                                    color="black",
+                                    hjust=0.5,
+                                    lineheight=1.2),  # title
+            plot.subtitle=element_text(size=12, 
+                                       family="American Typewriter",
+                                       
+                                       hjust=0.5),
+ axis.title.x=element_blank(), 
+ axis.text.x=element_blank(),
+ axis.ticks.x=element_blank(),
+ axis.title.y=element_blank(), 
+ axis.text.y=element_blank(),
+ axis.ticks.y=element_blank(),
+ panel.background=element_blank(),
+ panel.border=element_blank(),
+ panel.grid.minor=element_blank(),
+ plot.background=element_blank(),
+# legend.position = c(.9, .5),
+ legend.text = element_text(size = 4),
+ legend.title=element_text(size=6,face="bold"))
+ 
+```
+
+```{r echo=FALSE, message=FALSE, warning=FALSE,fig.align = "center",out.width = '100%'}
+snap_policy_index<-read.xlsx("snappolicyindexdata.xls",sheetIndex = 1,header=TRUE)[2:971,][c(2,4,10)]
+colnames(snap_policy_index)<-c("state_abbv","year","weighted_policy_index")
+# head(snap_policy_index)
+dt96<-snap_policy_index %>% group_by("state_abbv") %>% filter(year=="1996")
+dt14<-snap_policy_index %>% group_by("state_abbv") %>% filter(year=="2014")
+dt<- merge(dt96, dt14, by="state_abbv", all=TRUE)
+
+dt$index_diff<-as.numeric(as.character(dt$weighted_policy_index.y))-as.numeric(as.character(dt$weighted_policy_index.x))
+dt
+# states
+dt %>%
+  left_join(states, by = "state_abbv") %>%
+ggplot(mapping = aes(long, lat, group = group, fill = index_diff))  +labs(title="SNAP Policy Index Changes for all States", subtitle="1996 - 2014", caption="Source:USDA Food Nutrition Services
+")+theme(plot.caption = element_text(hjust = 0),panel.grid.major = element_line(colour = 'transparent'),
+         plot.title=element_text(size=17, 
+                                    face="bold", 
+                                    family="American Typewriter",
+                                    color="black",
+                                    hjust=0.5,
+                                    lineheight=1.2),  # title
+            plot.subtitle=element_text(size=12, 
+                                       family="American Typewriter",
+                                       
+                                       hjust=0.5),
+ axis.title.x=element_blank(), 
+ axis.text.x=element_blank(),
+ axis.ticks.x=element_blank(),
+ axis.title.y=element_blank(), 
+ axis.text.y=element_blank(),
+ axis.ticks.y=element_blank(),
+ panel.background=element_blank(),
+ panel.border=element_blank(),
+ panel.grid.minor=element_blank(),
+ plot.background=element_blank(),
+ legend.position = c(.9, .5),
+ legend.text = element_text(size = 8),
+ legend.title=element_text(size=6,face="bold")
+ )+
+  geom_polygon(color = "grey", size = 0.25) +
+  coord_map("albers", lat0 = 39, lat1 = 45)  + labs(fill = "Index Differences") 
+
+```
+
+
+
+
 ```{r echo=FALSE, message=FALSE, warning=FALSE,fig.align = "center",out.width = '100%'}
 
 snap_event<-read.xlsx("snap_event.xlsx",head=T,sheetIndex = 1)
@@ -449,7 +571,8 @@ b <- ggplot(part_ben, aes(x = Year, y=Benefit.dollar.person.))
 
 b + geom_point(aes(color = um), size = 4) +
   # scale_x_continuous(label=c(1990,1995,2000,2005,2010,2015))+
-  scale_color_gradientn(colors = c("#00AFBB", "#E7B800", "#FC4E07"))+labs(y = "Benefits per person ($)",x = "Year",colour = "Unemployment Rate",title="SNAP benefit dollar per person and Unemployment Rate 1989-2018", subtitle="Overall the SNAP participation and benefits increased over the last two decades",caption="Source:Bureau of Labor Statistics\n https://data.bls.gov/timeseries/LNS14000000")+theme(plot.caption = element_text(hjust = 0),plot.title=element_text(size=11, 
+  # scale_color_gradientn(colors = c("#00AFBB", "#E7B800", "#FC4E07"))+
+  labs(y = "Benefits per person ($)",x = "Year",colour = "Unemployment Rate",title="SNAP benefit dollar per person and Unemployment Rate 1989-2018", subtitle="Overall the SNAP participation and benefits increased over the last two decades",caption="Source:Bureau of Labor Statistics\n https://data.bls.gov/timeseries/LNS14000000")+theme(plot.caption = element_text(hjust = 0),plot.title=element_text(size=11, 
                                     face="bold", 
                                     family="American Typewriter",
                                     color="black",
@@ -491,7 +614,7 @@ the Child Nutrition Programs.
 ```{r echo=FALSE, message=FALSE,warning=FALSE,fig.align = "center",out.width = '80%'}
 # fig.height=4, fig.width=4 ,
 # Create data: note in High school for several students
-colors_in=c( rgb(0.2,0.6,0.8,1), rgb(1,0.6,0,1) , rgb(0.4,0.7,0.4,1) )
+colors_in=c( "#89b3e5", "#3972b5","#0f3a6d")
 require(RColorBrewer)
 data1 = matrix(
   c(6.4, 6.3,6.2,22, 23,24,81,78,74),
@@ -500,7 +623,7 @@ data1 = matrix(
 colnames(data1)=c("WIC" ,"School Lunch" , "SNAP")
 rownames(data1)=c("2016","2017","2018")
 # barplot(data, col=colors()[c(23,89,12)] , border="white", space=0.001, font.axis=2, xlab="group")
-barplot(data1, border="white",  beside=T, legend=rownames(data), ylab="$Billions",main="FNS Budget Authority (billions of dollars)",col = colors_in,legend.text = TRUE,args.legend = list(x = "topright", bty = "n", inset=c(-0.084, 0.1)))
+barplot(data1, border="white",  beside=T, legend=rownames(data), ylab="$Billions",main="FNS Budget Authority (billions of dollars)",col=colors_in,legend.text = TRUE,args.legend = list(x = "topright", bty = "n", inset=c(-0.084, 0.1)))
 
 data2 = matrix(
   c(7.7,7.3,7.2,30.4,30.6,30.6,44.2,42.8,42.2),
@@ -510,8 +633,8 @@ colnames(data2)=c("WIC" ,"School Lunch" , "SNAP")
 rownames(data2)=c("2016","2017","2018")
 # barplot(data, col=colors()[c(23,89,12)] , border="white", space=0.001, font.axis=2, xlab="group")
 g2<-barplot(data2,  border="white",  beside=T, legend=rownames(data),  ylab="People Served(millions)",
-main = "People Served Through Nutrition Assistance Programs",
-        col = colors_in,legend.text = TRUE,args.legend = list(x = "topright", bty = "n", inset=c(-0.084, 0.1)))
+main = "People Served Through Nutrition Assistance Programs",col=colors_in,
+         legend.text = TRUE,args.legend = list(x = "topright", bty = "n", inset=c(-0.084, 0.1)))
 
 ```
 
@@ -594,7 +717,6 @@ rownames(data)=c("Begining","AfterSixMonth")
 data=rbind(rep(35,5) , rep(0,5) , data)
 
 colors_border=c( rgb(0.2,0.5,0.5,0.9), rgb(0.8,0.2,0.5,0.9) , rgb(0.7,0.5,0.1,0.9) )
-colors_in=c( rgb(0.2,0.6,0.8,0.4), rgb(1,0.6,0,0.4) , rgb(0.4,0.7,0.4,0.4) )
 radarchart(data , axistype=1,title="Self-Reported Health Status:\nnew SNAP participants VS. same participants about six months later",
     #custom polygon
     pcol=colors_border , pfcol=colors_in , plwd=4 , plty=1,
@@ -612,10 +734,6 @@ We can see that the orange area leans towards good side more than the blue area,
 
 
 
-```{r}
-
-
-```
 
 
 
