@@ -6,7 +6,7 @@ This project aims to explore the relations between SNAP participation/benefits a
 Part 1:  
 Static Graphs
 
-Part 2:
+Part 2:  
 Interactive Portfolio
 
 
