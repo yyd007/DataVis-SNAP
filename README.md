@@ -4,5 +4,10 @@
 This project aims to explore the relations between SNAP participation/benefits and various public policies. 
   
 Part 1:  
-Three plots EDA
+Static Graphs
+
+Part 2:
+Interactive Portfolio
+
+
 
