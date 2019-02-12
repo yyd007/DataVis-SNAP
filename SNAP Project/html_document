@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+<meta name="author" content="Yangyang Dai" />
+
+
+<title>SNAP Project</title>
+
+<script src="html_document_files/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="html_document_files/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="html_document_files/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="html_document_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="html_document_files/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="html_document_files/navigation-1.1/tabsets.js"></script>
+<link href="html_document_files/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="html_document_files/highlightjs-9.12.0/highlight.js"></script>
+<script src="html_document_files/htmlwidgets-1.3/htmlwidgets.js"></script>
+<script src="html_document_files/plotly-binding-4.8.0/plotly.js"></script>
+<script src="html_document_files/typedarray-0.1/typedarray.min.js"></script>
+<link href="html_document_files/crosstalk-1.0.0/css/crosstalk.css" rel="stylesheet" />
+<script src="html_document_files/crosstalk-1.0.0/js/crosstalk.min.js"></script>
+<link href="html_document_files/plotly-htmlwidgets-css-1.39.2/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="html_document_files/plotly-main-1.39.2/plotly-latest.min.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">SNAP Project</h1>
+<h4 class="author"><em>Yangyang Dai</em></h4>
+
+</div>
+
+
+
+<p><img src="html_document_files/figure-html/unnamed-chunk-4-1.png" width="90%" style="display: block; margin: auto;" /></p>
+<p>Participation population of SNAP program in US across the 51 states, four regions, are shown above. West has the widest range of participation numbers, while the it’s more concentrated for Midwest. Overall, at state level, California has the most participations, nearly 4 million, and Wyoming has the fewest participants, about 0.1 million.</p>
+<p><img src="html_document_files/figure-html/unnamed-chunk-9-1.png" width="80%" style="display: block; margin: auto;" />  The first map is the US base map with state names labeled. From the US state map, combining with SNAP participation data, we can see that state AL, ND, SD and NH have the highest participation rate. This is reasonable as these states are less developed and tend to have more poor people. The participation rate range is not very big, therefore the colors are generally darker. Most of the states have participation rate around 0.00002 or lower.</p>
+
+<p><img src="html_document_files/figure-html/unnamed-chunk-11-1.png" width="80%" style="display: block; margin: auto;" />   Drawing a US Food Tax map across states and comparing it with the previous participation rate map, we can see that places with higher SNAP participation rates do not have high food tax. And places with high food tax rates tend to have low SNAP participation rates.</p>
+
+<p><img src="html_document_files/figure-html/unnamed-chunk-13-1.png" width="100%" style="display: block; margin: auto;" /></p>
+<p><img src="html_document_files/figure-html/unnamed-chunk-14-1.png" width="100%" style="display: block; margin: auto;" /></p>
+<p><img src="html_document_files/figure-html/unnamed-chunk-15-1.png" width="100%" style="display: block; margin: auto;" /></p>
+<p><img src="html_document_files/figure-html/unnamed-chunk-16-1.png" width="100%" style="display: block; margin: auto;" /></p>
+
+<p>From 1989 to 2018, the SNAP participation number in US increased from below two millions to about four millions, almost doubled in two decades. The peaks within the two decades happened at year 1994 and year 2013, reached over 2.5 millions and over 4.5 millions respectively. Connecting to the previous SNAP timeline graph, SNAP reached participation milestone for those two years. The Food Stamp Nutrition Education program at 1992 and Mickey Leland Childhood Hunger Relief Act at 1993 influenced the growth of SNAP, the participants increased dramatically afterwards. And from 2002 to 2014, there are five events happened that drove the SNAP participaion greatly.</p>
+
+
+<div id="htmlwidget-a89732609db27d41ec84" style="width:90%;height:480px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-a89732609db27d41ec84">{"x":{"visdat":{"33a3291f0565":["function () ","plotlyVisDat"]},"cur_data":"33a3291f0565","attrs":{"33a3291f0565":{"y":[0.507991660875608,1.15852534562212,0.185845431255337,0.0951480781348456,0.0572086141706395,0.326698802674545,0.0870253164556962,-0.0793573777562133,-0.0630087251859226,0.103243547278295,0.194244604316547,0.0639408025804003,-0.0317877842175658,-0.00423631256619238,-0.0356531791907514,-0.0457945717847895,-0.0236192773506206,-0.0162643471099902,-0.0244859519698634,0.00865987753821402,0.0660684648181462,0.12846786854834,0.122979195047061,0.0621793202692045,0.018042980027124,-0.0311178914416323,-0.0404316785503207,-0.105095092149664,-0.134182066853963,-0.0812716812192944,-0.0543490456572829,0.00721887498486138,0.102617598798459,0.112800070728002,0.120525235916696,0.0763400856344587,0.0359123109253444,-0.00876831693273772,0.0724495529966501,0.186635483771042,0.203401274611302,0.109345973487886,0.0425050226919757,0.0220347305845816,-0.0204092615494309,-0.0192268816009986,-0.0338086379684417,-0.047401450005099,null],"x":[1970,1971,1972,1973,1974,1975,1976,1977,1978,1979,1980,1981,1982,1983,1984,1985,1986,1987,1988,1989,1990,1991,1992,1993,1994,1995,1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,null],"mode":"markers+lines","xlab":"Year","ylab":"Percentage Change","name":"Population","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter"},"33a3291f0565.1":{"y":{},"x":{},"mode":"markers+lines","xlab":"Year","ylab":"Percentage Change","name":"Unemployment Rate","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter","inherit":true},"33a3291f0565.2":{"y":{},"x":{},"mode":"markers+lines","xlab":"Year","ylab":"Percentage Change","name":"Poverty Rate","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"scatter","inherit":true}},"layout":{"width":800,"height":500,"margin":{"b":100,"l":150,"t":100,"r":50,"pad":4},"xaxis":{"domain":[0,1],"automargin":true,"title":"Year"},"yaxis":{"domain":[0,1],"automargin":true,"title":"% Change"},"title":"SNAP Participants and Economic Indicators:<br />Percentage Change 1969 - 2018","legend":{"x":100,"y":0.8},"autosize":false,"hovermode":"closest","showlegend":true},"source":"A","config":{"modeBarButtonsToAdd":[{"name":"Collaborate","icon":{"width":1000,"ascent":500,"descent":-50,"path":"M487 375c7-10 9-23 5-36l-79-259c-3-12-11-23-22-31-11-8-22-12-35-12l-263 0c-15 0-29 5-43 15-13 10-23 23-28 37-5 13-5 25-1 37 0 0 0 3 1 7 1 5 1 8 1 11 0 2 0 4-1 6 0 3-1 5-1 6 1 2 2 4 3 6 1 2 2 4 4 6 2 3 4 5 5 7 5 7 9 16 13 26 4 10 7 19 9 26 0 2 0 5 0 9-1 4-1 6 0 8 0 2 2 5 4 8 3 3 5 5 5 7 4 6 8 15 12 26 4 11 7 19 7 26 1 1 0 4 0 9-1 4-1 7 0 8 1 2 3 5 6 8 4 4 6 6 6 7 4 5 8 13 13 24 4 11 7 20 7 28 1 1 0 4 0 7-1 3-1 6-1 7 0 2 1 4 3 6 1 1 3 4 5 6 2 3 3 5 5 6 1 2 3 5 4 9 2 3 3 7 5 10 1 3 2 6 4 10 2 4 4 7 6 9 2 3 4 5 7 7 3 2 7 3 11 3 3 0 8 0 13-1l0-1c7 2 12 2 14 2l218 0c14 0 25-5 32-16 8-10 10-23 6-37l-79-259c-7-22-13-37-20-43-7-7-19-10-37-10l-248 0c-5 0-9-2-11-5-2-3-2-7 0-12 4-13 18-20 41-20l264 0c5 0 10 2 16 5 5 3 8 6 10 11l85 282c2 5 2 10 2 17 7-3 13-7 17-13z m-304 0c-1-3-1-5 0-7 1-1 3-2 6-2l174 0c2 0 4 1 7 2 2 2 4 4 5 7l6 18c0 3 0 5-1 7-1 1-3 2-6 2l-173 0c-3 0-5-1-8-2-2-2-4-4-4-7z m-24-73c-1-3-1-5 0-7 2-2 3-2 6-2l174 0c2 0 5 0 7 2 3 2 4 4 5 7l6 18c1 2 0 5-1 6-1 2-3 3-5 3l-174 0c-3 0-5-1-7-3-3-1-4-4-5-6z"},"click":"function(gd) { \n        // is this being viewed in RStudio?\n        if (location.search == '?viewer_pane=1') {\n          alert('To learn about plotly for collaboration, visit:\\n https://cpsievert.github.io/plotly_book/plot-ly-for-collaboration.html');\n        } else {\n          window.open('https://cpsievert.github.io/plotly_book/plot-ly-for-collaboration.html', '_blank');\n        }\n      }"}],"cloud":false},"data":[{"y":[0.507991660875608,1.15852534562212,0.185845431255337,0.0951480781348456,0.0572086141706395,0.326698802674545,0.0870253164556962,-0.0793573777562133,-0.0630087251859226,0.103243547278295,0.194244604316547,0.0639408025804003,-0.0317877842175658,-0.00423631256619238,-0.0356531791907514,-0.0457945717847895,-0.0236192773506206,-0.0162643471099902,-0.0244859519698634,0.00865987753821402,0.0660684648181462,0.12846786854834,0.122979195047061,0.0621793202692045,0.018042980027124,-0.0311178914416323,-0.0404316785503207,-0.105095092149664,-0.134182066853963,-0.0812716812192944,-0.0543490456572829,0.00721887498486138,0.102617598798459,0.112800070728002,0.120525235916696,0.0763400856344587,0.0359123109253444,-0.00876831693273772,0.0724495529966501,0.186635483771042,0.203401274611302,0.109345973487886,0.0425050226919757,0.0220347305845816,-0.0204092615494309,-0.0192268816009986,-0.0338086379684417,-0.047401450005099],"x":[1970,1971,1972,1973,1974,1975,1976,1977,1978,1979,1980,1981,1982,1983,1984,1985,1986,1987,1988,1989,1990,1991,1992,1993,1994,1995,1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017],"mode":"markers+lines","xlab":"Year","ylab":"Percentage Change","name":"Population","type":"scatter","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"line":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null},{"y":[0.427207637231504,0.193979933110368,-0.0588235294117646,-0.132440476190476,0.161234991423671,0.502215657311669,-0.0914454277286136,-0.0844155844155842,-0.139479905437352,-0.0357142857142856,0.226495726495726,0.0615563298490127,0.274617067833698,-0.0111587982832617,-0.217881944444444,-0.0421753607103219,-0.0266512166859791,-0.117857142857143,-0.110661268556006,-0.0424886191198786,0.0681458003169572,0.219584569732938,0.0936739659367399,-0.077864293659622,-0.117008443908323,-0.0833333333333332,-0.0327868852459017,-0.0862865947611712,-0.0893760539629005,-0.0629629629629627,-0.0592885375494074,0.195378151260504,0.219683655536028,0.0360230547550432,-0.0751043115438109,-0.0827067669172933,-0.0934426229508196,0.00180831826401456,0.256317689530686,0.600574712643678,0.0350089766606822,-0.070251517779705,-0.0960820895522387,-0.0887512899896801,-0.163080407701019,-0.143437077131259,-0.075829383886256,-0.107692307692308],"x":[1970,1971,1972,1973,1974,1975,1976,1977,1978,1979,1980,1981,1982,1983,1984,1985,1986,1987,1988,1989,1990,1991,1992,1993,1994,1995,1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017],"mode":"markers+lines","xlab":"Year","ylab":"Percentage Change","name":"Unemployment Rate","type":"scatter","marker":{"color":"rgba(255,127,14,1)","line":{"color":"rgba(255,127,14,1)"}},"error_y":{"color":"rgba(255,127,14,1)"},"error_x":{"color":"rgba(255,127,14,1)"},"line":{"color":"rgba(255,127,14,1)"},"xaxis":"x","yaxis":"y","frame":null},{"y":[0.0413223140495868,-0.00793650793650791,-0.048,-0.0672268907563026,0.00900900900900898,0.0982142857142859,-0.040650406504065,-0.016949152542373,-0.0172413793103448,0.0263157894736841,0.111111111111111,0.0769230769230769,0.0714285714285714,0.0133333333333333,-0.0526315789473684,-0.0277777777777778,-0.0285714285714286,-0.0147058823529411,-0.0298507462686567,-0.0153846153846153,0.0546874999999999,0.0518518518518518,0.0422535211267607,0.0202702702702702,-0.0397350993377483,-0.0482758620689655,-0.00724637681159431,-0.0291970802919707,-0.0451127819548873,-0.0629921259842519,-0.0504201680672269,0.0353982300884954,0.0341880341880342,0.0330578512396695,0.0159999999999999,-0.00787401574803147,-0.0238095238095237,0.016260162601626,0.0559999999999999,0.0833333333333334,0.0559440559440559,-0.00662251655629137,0,-0.0333333333333333,0.0206896551724138,-0.0878378378378379,-0.0592592592592593,-0.0314960629921259],"x":[1970,1971,1972,1973,1974,1975,1976,1977,1978,1979,1980,1981,1982,1983,1984,1985,1986,1987,1988,1989,1990,1991,1992,1993,1994,1995,1996,1997,1998,1999,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017],"mode":"markers+lines","xlab":"Year","ylab":"Percentage Change","name":"Poverty Rate","type":"scatter","marker":{"color":"rgba(44,160,44,1)","line":{"color":"rgba(44,160,44,1)"}},"error_y":{"color":"rgba(44,160,44,1)"},"error_x":{"color":"rgba(44,160,44,1)"},"line":{"color":"rgba(44,160,44,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"base_url":"https://plot.ly"},"evals":["config.modeBarButtonsToAdd.0.click"],"jsHooks":[]}</script>
+
+<p>Overall, the changes of SNAP participation population, unemployment rate, and poverty rate have similar trends. Unemployment rate change fluctuates more than the other two rates, while the poverty rate change is the most consistent over the years. One outlier is in 1971, the SNAP population doubled compared to the previous year and then came back.      </p>
+<p><img src="html_document_files/figure-html/unnamed-chunk-21-1.png" width="85%" style="display: block; margin: auto 0 auto auto;" />    </p>
+<p>From 1989 to 2018, the benefits per person increased dramatically. From around 50 dollars to above 250 dollars, the dollar benefitfive is currenly five times more than from the beginning. The color scale shows the range of unemployment rate over the years. The unemployment rate fluctuates from 1989 to 2008, and increased dramatically around 2008 to 2014, which is the financial crisis period. The benefit per person decreased a little, but after the crisis, the benefit jumped very high till around 250 dollars per person and came back to around 125 in the most recent year.</p>
+
+<p>FOOD AND NUTRITION SERVICE The Budget provides funding for the major nutrition assistance programs, accounting for projected program participation and food cost inflation. It seeks to prevent and reduce food insecurity and to improve the nutritional status of recipients.</p>
+<p>To support FNS’ work to identify and eliminate fraud, waste, and abuse, the Budget provides resources for program integrity efforts in all of the major programs, including SNAP, WIC, and the Child Nutrition Programs.      </p>
+<p><img src="html_document_files/figure-html/unnamed-chunk-22-1.png" width="80%" style="display: block; margin: auto;" /><img src="html_document_files/figure-html/unnamed-chunk-22-2.png" width="80%" style="display: block; margin: auto;" /></p>
+<p>The above two graphs show the budget distribution for FNS (Food nutrition services) and number of people served by those three nutrition programs. In specific, SNAP takes three times more FNS budget than WIC and School Lunch program. And the number of participants of SNAP are roughly the WIC and School Lunch combined. Across the three years from 2016 to 2018, the budget to the WIC and SNAP declined, and correspondingly, the number of participants declined as well. A little bit more funds went to School Lunch program and the participants increased over the year.</p>
+
+<p><img src="html_document_files/figure-html/unnamed-chunk-24-1.png" width="80%" style="display: block; margin: auto;" /></p>
+
+<p>The longitudinal estimates compare new SNAP participants to the same participants about six months later. Tabulations are based on the following overall sample sizes: 3,275 new-entrant households and 3,375 six-month households in the cross-sectional sample; and 3,275 new-entrant households observed at baseline and again at follow up six months later in the longitudinal sample. We can see that the orange area leans towards good side more than the blue area, which suggests that the health status after six month for SNAP participants is better than the start of the survey.</p>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

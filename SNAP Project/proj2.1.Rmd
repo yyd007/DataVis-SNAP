@@ -1,13 +1,15 @@
 ---
 title: "SNAP Project"
 author: "Yangyang Dai"
-#date: "2/1/2019"
 output:
   html_document: default
   pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
+library(rmarkdown)
+library(knitr)
+render("proj2.1.Rmd", "html_document")
 library(RColorBrewer)
 library(fmsb)
 library(plotly)
@@ -24,6 +26,7 @@ require(xlsx)
 library(ggplot2)
 library(gtable)
 library(grid)
+library(xlsx)
 require("devtools")
 library("tidyverse")
 library("viridis")
