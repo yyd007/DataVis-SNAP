@@ -9,5 +9,6 @@ Static Graphs
 Part 2:  
 Interactive Portfolio
 
+published @ https://yyd007.github.io/SNAP/
 
 
